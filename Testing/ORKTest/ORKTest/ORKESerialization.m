@@ -984,6 +984,13 @@ encondingTable =
         (@{
           PROPERTY(imageChoices, ORKImageChoice, NSArray, NO, nil, nil),
           })),
+   ENTRY(ORKMoodScaleAnswerFormat,
+         ^id(NSDictionary *dict, ORKESerializationPropertyGetter getter) {
+             return [[ORKMoodScaleAnswerFormat alloc] initWithImageChoices:GETPROP(dict, imageChoices)];
+         },
+         (@{
+            PROPERTY(imageChoices, ORKImageChoice, NSArray, NO, nil, nil),
+            })),
   ENTRY(ORKTextChoiceAnswerFormat,
         ^id(NSDictionary *dict, ORKESerializationPropertyGetter getter) {
             return [[ORKTextChoiceAnswerFormat alloc] initWithStyle:((NSNumber *)GETPROP(dict, style)).integerValue textChoices:GETPROP(dict, textChoices)];
@@ -1369,6 +1376,11 @@ encondingTable =
             PROPERTY(scaleAnswer, NSNumber, NSObject, NO, nil, nil)
             })),
    ENTRY(ORKChoiceQuestionResult,
+         nil,
+         (@{
+            PROPERTY(choiceAnswers, NSObject, NSObject, NO, nil, nil)
+            })),
+   ENTRY(ORKMoodScaleQuestionResult,
          nil,
          (@{
             PROPERTY(choiceAnswers, NSObject, NSObject, NO, nil, nil)
