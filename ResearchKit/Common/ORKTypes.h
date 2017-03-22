@@ -30,10 +30,15 @@
 
 
 @import Foundation;
+@import HealthKit;
 #import <ResearchKit/ORKDefines.h>
 
 
 NS_ASSUME_NONNULL_BEGIN
+
+ORK_CLASS_AVAILABLE
+@interface ORKTypes : NSObject
+@end
 
 /**
  An enumeration of values that identify the different types of questions that the ResearchKit
@@ -376,7 +381,9 @@ typedef NS_ENUM(NSUInteger, ORKMoodQuestionType) {
     ORKMoodQuestionTypeOverall,
     ORKMoodQuestionTypePain,
     ORKMoodQuestionTypeSleep,
-    ORKMoodQuestionTypeExcercise
+    ORKMoodQuestionTypeExcercise,
+    ORKMoodQuestionTypeBreathing,
+    ORKMoodQuestionTypeTired,
 } ORK_ENUM_AVAILABLE;
 
 
@@ -418,5 +425,18 @@ typedef NS_OPTIONS(NSUInteger, ORKTremorActiveTaskOption) {
     /// Exclude the queen-wave steps.
     ORKTremorActiveTaskOptionExcludeQueenWave = (1 << 4)
 } ORK_ENUM_AVAILABLE;
+
+
+/**
+ Extension to HKUnit
+ */
+@interface HKUnit (ORKUnitExtension)
+
+/**
+ Beats per minute (heart rate)
+ */
++ (HKUnit *)bpmUnit;
+
+@end
 
 NS_ASSUME_NONNULL_END

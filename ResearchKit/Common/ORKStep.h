@@ -181,7 +181,18 @@ ORK_CLASS_AVAILABLE
  By default, the property scans the recorders and collates the HealthKit
  types the recorders require. Subclasses may override this implementation.
  */
-@property (nonatomic, readonly, nullable) NSSet<HKObjectType *> *requestedHealthKitTypesForReading;
+@property (nonatomic, copy, readonly, nullable) NSSet<HKObjectType *> *requestedHealthKitTypesForReading;
+
+/**
+ The set of HealthKit types the step requests for writing. (read-only)
+ 
+ The requested `HKObjectType` values for writing can be returned by an extended task,
+ to request write access to these HealthKit types together with the read access
+ requested by the task view controller by calling `requestedHealthKitTypesForReading`.
+ 
+ See also: `requestedHealthKitTypesForReading`.
+ */
+@property (nonatomic, copy, readonly, nullable) NSSet<HKObjectType *> *requestedHealthKitTypesForWriting;
 
 /**
  Checks the parameters of the step and throws exceptions on invalid parameters.
@@ -199,7 +210,7 @@ ORK_CLASS_AVAILABLE
  Returns the class that the task view controller should instantiate to display
  this step.
  */
-- (Class)stepViewControllerClass;
+- (Class)stepViewControllerClass NS_AVAILABLE_IOS(7_0);
 
 /**
  Instantiates a step view controller for this class.
@@ -216,7 +227,7 @@ ORK_CLASS_AVAILABLE
  
  @return A newly initialized step view controller.
  */
-- (ORKStepViewController *)instantiateStepViewControllerWithResult:(ORKResult *)result;
+- (ORKStepViewController *)instantiateStepViewControllerWithResult:(ORKResult *)result NS_AVAILABLE_IOS(7_0);
 
 /**
  Is this an instruction step? By default, this method will return `YES` if and only if this is 
