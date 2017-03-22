@@ -87,6 +87,7 @@ enum TaskListRow: Int, CustomStringConvertible {
     case audio
     case fitness
     case holePegTest
+    case moodSurvey
     case psat
     case reactionTime
     case shortWalk
@@ -170,6 +171,10 @@ enum TaskListRow: Int, CustomStringConvertible {
                     .kneeRangeOfMotion,
                     .shoulderRangeOfMotion,
                     .trailMaking
+                ]),
+            TaskListRowSection(title: "Surveys", rows:
+                [
+                    .moodSurvey,
                 ]),
             TaskListRowSection(title: "Miscellaneous", rows:
                 [
@@ -264,6 +269,9 @@ enum TaskListRow: Int, CustomStringConvertible {
         
         case .holePegTest:
             return NSLocalizedString("Hole Peg Test", comment: "")
+            
+        case .moodSurvey:
+            return NSLocalizedString("Mood Survey", comment: "")
             
         case .psat:
             return NSLocalizedString("PSAT", comment: "")
@@ -470,6 +478,9 @@ enum TaskListRow: Int, CustomStringConvertible {
         case shoulderRangeOfMotion
         case trailMaking
         
+        // Surveys
+        case moodSurvey
+        
         // Video instruction tasks.
         case videoInstructionTask
         case videoInstructionStep
@@ -562,6 +573,9 @@ enum TaskListRow: Int, CustomStringConvertible {
             
         case .holePegTest:
             return holePegTestTask
+            
+        case .moodSurvey:
+            return moodSurvey
             
         case .psat:
             return PSATTask
@@ -1292,6 +1306,11 @@ enum TaskListRow: Int, CustomStringConvertible {
     /// This task presents the Hole Peg Test pre-defined active task.
     private var holePegTestTask: ORKTask {
         return ORKNavigableOrderedTask.holePegTest(withIdentifier: String(describing:Identifier.holePegTestTask), intendedUseDescription: exampleDescription, dominantHand: .right, numberOfPegs: 9, threshold: 0.2, rotated: false, timeLimit: 300, options: [])
+    }
+    
+    /// This task presents a Mood Survey
+    private var moodSurvey: ORKTask {
+        return ORKOrderedTask.moodSurvey(withIdentifier: String(describing:Identifier.moodSurvey), intendedUseDescription: exampleDescription, frequency: .daily, customQuestionText: NSLocalizedString("How much do you like oranges?", comment: ""), options: [])
     }
     
     /// This task presents the PSAT pre-defined active task.
