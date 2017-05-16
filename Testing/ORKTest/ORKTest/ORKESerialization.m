@@ -1363,12 +1363,6 @@ encondingTable =
          (@{
             PROPERTY(questionType, NSNumber, NSObject, NO, nil, nil)
             })),
-   ENTRY(ORKDataResult,
-         nil,
-         (@{
-            PROPERTY(contentType, NSString, NSObject, YES, nil, nil),
-            PROPERTY(filename, NSString, NSObject, YES, nil, nil),
-            })),
    ENTRY(ORKScaleQuestionResult,
          nil,
          (@{
