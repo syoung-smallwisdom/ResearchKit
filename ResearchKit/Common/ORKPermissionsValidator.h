@@ -1,6 +1,5 @@
 /*
- Copyright (c) 2015, Apple Inc. All rights reserved.
- Copyright (c) 2017, Sage Bionetworks
+ Copyright (c) 2017, Sage Bionetworks. All rights reserved.
  
  Redistribution and use in source and binary forms, with or without modification,
  are permitted provided that the following conditions are met:
@@ -30,15 +29,20 @@
  */
 
 
-#import <ResearchKit/ORKFileResult.h>
-#import <ResearchKit/ORKGoNoGoResult.h>
-#import <ResearchKit/ORKHolePegTestResult.h>
-#import <ResearchKit/ORKPSATResult.h>
-#import <ResearchKit/ORKRangeOfMotionResult.h>
-#import <ResearchKit/ORKReactionTimeResult.h>
-#import <ResearchKit/ORKSpatialSpanMemoryResult.h>
-#import <ResearchKit/ORKTappingIntervalResult.h>
-#import <ResearchKit/ORKTimedWalkResult.h>
-#import <ResearchKit/ORKToneAudiometryResult.h>
-#import <ResearchKit/ORKTowerOfHanoiResult.h>
-#import <ResearchKit/ORKTrailmakingResult.h>
+@import Foundation;
+@import HealthKit;
+#import <ResearchKit/ORKTypes.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+ORK_CLASS_AVAILABLE
+@interface ORKPermissionsValidator : NSObject
+
++ (BOOL)validatePermissions:(ORKPermissionMask)permissions
+                 writeTypes:(nullable NSSet<HKSampleType *> *)typesToWrite
+                  readTypes:(nullable NSSet<HKObjectType *> *)typesToRead
+                      error:(NSError **)error;
+
+@end
+
+NS_ASSUME_NONNULL_END
