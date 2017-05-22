@@ -49,12 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
  as the other questions.
  
  @param identifier              The task identifier to use for this task, appropriate to the study.
- @param intendedUseDescription  A localized string describing the intended use of the data
- collected. If the value of this parameter is `nil`, the default
- localized text is displayed.
- @param frequency               How frequently the survey is asked (daily or weekly)
- @param customQuestionText      A localized string to use for a custom question. If `nil`, this step
- is not included.
+ @param intendedUseDescription  A localized string describing the intended use of the data collected. If the value of this parameter is `nil`, the default localized text is displayed.
+ @param frequency               How frequently the survey is asked (daily or weekly).
+ @param customQuestionText      A localized string to use for a custom question. If `nil`, this step is not included.
  @param options                 Options that affect the features of the predefined task.
  
  @return An mood survey that can be presented with an `ORKTaskViewController` object.
