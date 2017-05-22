@@ -575,7 +575,7 @@
 		FF154FB41E82EF5E004ED908 /* ORKOrderedTask+ORKPredefinedActiveTask.h in Headers */ = {isa = PBXBuildFile; fileRef = FF154FB21E82EF5E004ED908 /* ORKOrderedTask+ORKPredefinedActiveTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF154FB51E82EF5E004ED908 /* ORKOrderedTask+ORKPredefinedActiveTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FF154FB31E82EF5E004ED908 /* ORKOrderedTask+ORKPredefinedActiveTask.m */; };
 		FF154FB71E82F53E004ED908 /* ORKTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = FF154FB61E82F53E004ED908 /* ORKTypes.m */; };
-		FF1934851ED393C400BA17B5 /* ORKGoNoGoResult.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1934831ED393C400BA17B5 /* ORKGoNoGoResult.h */; };
+		FF1934851ED393C400BA17B5 /* ORKGoNoGoResult.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1934831ED393C400BA17B5 /* ORKGoNoGoResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF1934861ED393C400BA17B5 /* ORKGoNoGoResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1934841ED393C400BA17B5 /* ORKGoNoGoResult.m */; };
 		FF36A48D1D1A0ACA00DE8470 /* ORKAudioLevelNavigationRule.h in Headers */ = {isa = PBXBuildFile; fileRef = FF36A48B1D1A0ACA00DE8470 /* ORKAudioLevelNavigationRule.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		FF36A48E1D1A0ACA00DE8470 /* ORKAudioLevelNavigationRule.m in Sources */ = {isa = PBXBuildFile; fileRef = FF36A48C1D1A0ACA00DE8470 /* ORKAudioLevelNavigationRule.m */; };
