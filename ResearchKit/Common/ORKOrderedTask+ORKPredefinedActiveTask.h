@@ -30,6 +30,8 @@
 
 
 @import UIKit;
+@import AudioToolbox;
+
 #import <ResearchKit/ORKOrderedTask.h>
 
 

@@ -30,6 +30,10 @@
 
 #import "ORKGoNoGoResult.h"
 
+#import "ORKResult_Private.h"
+#import "ORKHelpers_Internal.h"
+
+
 @implementation ORKGoNoGoSample
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {

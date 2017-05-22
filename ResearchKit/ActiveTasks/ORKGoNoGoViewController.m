@@ -37,7 +37,8 @@
 #import "ORKActiveStepViewController_Internal.h"
 
 #import "ORKGoNoGoStep.h"
-#import "ORKResult.h"
+#import "ORKGoNoGoResult.h"
+#import "ORKCollectionResult.h"
 
 #import "ORKHelpers_Internal.h"
 
