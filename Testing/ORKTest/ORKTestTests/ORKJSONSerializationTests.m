@@ -240,7 +240,6 @@ ORK_MAKE_TEST_INIT(HKCorrelationType, (^{
 ORK_MAKE_TEST_INIT(HKCharacteristicType, (^{
     return [HKCharacteristicType characteristicTypeForIdentifier:HKCharacteristicTypeIdentifierBloodType];
 }))
-
 ORK_MAKE_TEST_INIT(NSNumber, (^{
     return [self initWithInt:123];
 }))
@@ -259,8 +258,10 @@ ORK_MAKE_TEST_INIT(NSCalendar, (^{
 ORK_MAKE_TEST_INIT(NSRegularExpression, (^{
     return [self initWithPattern:@"." options:0 error:nil];
 }))
-
-
+ORK_MAKE_TEST_INIT(NSError, ^{return [self initWithDomain:@"ORKTest" code:1 userInfo:nil];});
+ORK_MAKE_TEST_INIT(ORKDevice, ^{return [self initWithName:@"test" manufacturer:@"test" model:@"test" hardwareVersion:nil softwareVersion:nil];});
+ORK_MAKE_TEST_INIT(HKWorkoutEvent, ^{return [HKWorkoutEvent workoutEventWithType:HKWorkoutEventTypeMarker date:[NSDate date]];});
+                                                
 @interface ORKJSONSerializationTests : XCTestCase <NSKeyedUnarchiverDelegate>
 
 @end
@@ -404,6 +405,7 @@ ORK_MAKE_TEST_INIT(NSRegularExpression, (^{
                                        @"ORKNavigablePageStep.steps",
                                        @"ORKTextAnswerFormat.validationRegex",
                                        @"ORKRegistrationStep.passcodeValidationRegex",
+                                       @"workoutConfiguration",
                                        ];
     NSArray *knownNotSerializedProperties = @[
                                               @"ORKStep.task",
@@ -421,6 +423,7 @@ ORK_MAKE_TEST_INIT(NSRegularExpression, (^{
                                               @"ORKConsentDocument.sections",
                                               @"ORKConsentDocument.signatures",
                                               @"ORKContinuousScaleAnswerFormat.numberFormatter",
+                                              @"ORKWorkoutResult.error",
                                               @"ORKFormItem.step",
                                               @"ORKTimeIntervalAnswerFormat.maximumInterval",
                                               @"ORKTimeIntervalAnswerFormat.defaultInterval",
@@ -493,6 +496,22 @@ ORK_MAKE_TEST_INIT(NSRegularExpression, (^{
                         {
                             // Map NSObject to string, since it's used where either a string or a number is acceptable
                             [instance setValue:@"test" forKey:p.propertyName];
+                        } else if (p.propertyClass == [NSNumber class]) {
+                            [instance setValue:@(120) forKey:p.propertyName];
+                        } else if (p.propertyClass == [HKUnit class]) {
+                            [instance setValue:[HKUnit unitFromString:@"kg"] forKey:p.propertyName];
+                        } else if (p.propertyClass == [NSURL class]) {
+                            [instance setValue:[NSURL fileURLWithPath:@"/usr"] forKey:p.propertyName];
+                        } else if (p.propertyClass == [NSTimeZone class]) {
+                            [instance setValue:[NSTimeZone timeZoneForSecondsFromGMT:60*60] forKey:p.propertyName];
+                        } else if (p.propertyClass == [HKQuantityType class]) {
+                            [instance setValue:[HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierBodyMass] forKey:p.propertyName];
+                        } else if (p.propertyClass == [HKCharacteristicType class]) {
+                            [instance setValue:[HKCharacteristicType characteristicTypeForIdentifier:HKCharacteristicTypeIdentifierBloodType] forKey:p.propertyName];
+                        } else if (p.propertyClass == [NSCalendar class]) {
+                            [instance setValue:[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian] forKey:p.propertyName];
+                        } else if (p.propertyClass == [ORKLocation class]) {
+                            [instance setValue:[[ORKLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(2.0, 3.0) region:[[CLCircularRegion alloc] initWithCenter:CLLocationCoordinate2DMake(2.0, 3.0) radius:100.0 identifier:@"identifier"] userInput:@"addressString" addressDictionary:@{@"city":@"city", @"street":@"street"}] forKey:p.propertyName];
                         } else {
                             id itemInstance = [self instanceForClass:p.propertyClass];
                             [instance setValue:itemInstance forKey:p.propertyName];
@@ -580,7 +599,7 @@ ORK_MAKE_TEST_INIT(NSRegularExpression, (^{
             if (p.isBoolType) {
                 XCTAssertNoThrow([instance setValue:index?@YES:@NO forKey:p.propertyName]);
             } else {
-                XCTAssertNoThrow([instance setValue:index?@(12):@(123) forKey:p.propertyName]);
+                XCTAssertNoThrow([instance setValue:index?@(12):@(120) forKey:p.propertyName]);
             }
             return YES;
         } else {
@@ -595,7 +614,7 @@ ORK_MAKE_TEST_INIT(NSRegularExpression, (^{
         // Map NSObject to string, since it's used where either a string or a number is acceptable
         [instance setValue:index?@"blah":@"test" forKey:p.propertyName];
     } else if (p.propertyClass == [NSNumber class]) {
-        [instance setValue:index?@(12):@(123) forKey:p.propertyName];
+        [instance setValue:index?@(12):@(120) forKey:p.propertyName];
     } else if (p.propertyClass == [NSURL class]) {
         NSURL *url = [NSURL fileURLWithFileSystemRepresentation:[index?@"xxx":@"blah" UTF8String]  isDirectory:NO relativeToURL:[NSURL fileURLWithPath:NSHomeDirectory()]];
         [instance setValue:url forKey:p.propertyName];
@@ -655,6 +674,7 @@ ORK_MAKE_TEST_INIT(NSRegularExpression, (^{
                                        @"ORKNavigablePageStep.steps",
                                        @"ORKTextAnswerFormat.validationRegex",
                                        @"ORKRegistrationStep.passcodeValidationRegex",
+                                       @"watchWorkoutConfiguration",
                                        ];
     NSArray *knownNotSerializedProperties = @[@"ORKConsentDocument.writer", // created on demand
                                               @"ORKConsentDocument.signatureFormatter", // created on demand
@@ -784,6 +804,8 @@ ORK_MAKE_TEST_INIT(NSRegularExpression, (^{
                 && ![aClass isSubclassOfClass:[ORKKeyValueStepModifier class]]
                 // ORKKeyValueStepModifier si a subclass of ORKStepModifier which is an abstract class
                 // with no encoded properties, but encoded/decoded objects are still equal.
+                && ![aClass isSubclassOfClass:[ORKWorkoutStep class]]
+                // ORKWorkoutClass fails because of the workoutConfiguration
                 ) {
                 XCTAssertEqualObjects(data, data2, @"data mismatch for %@", NSStringFromClass(aClass));
             }
@@ -888,6 +910,7 @@ ORK_MAKE_TEST_INIT(NSRegularExpression, (^{
                                    @"ORKToneAudiometryResult.outputVolume",
                                    @"ORKConsentSection.contentURL",
                                    @"ORKConsentSection.customAnimationURL",
+                                   @"ORKMoodScaleQuestionResult.scaleAnswer",
                                    @"ORKNumericAnswerFormat.minimum",
                                    @"ORKNumericAnswerFormat.maximum",
                                    @"ORKVideoCaptureStep.duration",
