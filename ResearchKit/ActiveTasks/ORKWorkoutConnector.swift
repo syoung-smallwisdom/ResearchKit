@@ -309,7 +309,7 @@ open class ORKWorkoutConnector: NSObject, HKWorkoutSessionDelegate {
                 }
             } else {
                 if (error != nil) {
-                    print("Failed to save workout: \(error)")
+                    print("Failed to save workout: \(String(describing: error))")
                 }
                 self.sendFinishedMessage(with: workout)
             }

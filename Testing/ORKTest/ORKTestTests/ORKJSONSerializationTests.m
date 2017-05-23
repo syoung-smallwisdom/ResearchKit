@@ -258,9 +258,6 @@ ORK_MAKE_TEST_INIT(NSCalendar, (^{
 ORK_MAKE_TEST_INIT(NSRegularExpression, (^{
     return [self initWithPattern:@"." options:0 error:nil];
 }))
-ORK_MAKE_TEST_INIT(CLCircularRegion, (^{
-    return [[CLCircularRegion alloc] initWithCenter:CLLocationCoordinate2DMake(2.0, 3.0) radius:100.0 identifier:@"identifier"];
-}));
 ORK_MAKE_TEST_INIT(NSError, ^{return [self initWithDomain:@"ORKTest" code:1 userInfo:nil];});
 ORK_MAKE_TEST_INIT(ORKDevice, ^{return [self initWithName:@"test" manufacturer:@"test" model:@"test" hardwareVersion:nil softwareVersion:nil];});
 ORK_MAKE_TEST_INIT(HKWorkoutEvent, ^{return [HKWorkoutEvent workoutEventWithType:HKWorkoutEventTypeMarker date:[NSDate date]];});
