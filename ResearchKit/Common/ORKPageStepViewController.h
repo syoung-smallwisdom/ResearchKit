@@ -32,7 +32,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ORKPageStep;
+@protocol ORKPageStepSource;
 @protocol ORKTaskResultSource;
 
 ORK_CLASS_AVAILABLE
@@ -41,7 +41,7 @@ ORK_CLASS_AVAILABLE
 /**
  The `ORKPageStep` associated with this view controller.
  */
-@property (nonatomic, readonly, nullable) ORKPageStep *pageStep;
+@property (nonatomic, readonly, nullable) id <ORKPageStepSource> pageStep;
 
 /**
  Returns the step view controller to associate with this step. By default, this will
