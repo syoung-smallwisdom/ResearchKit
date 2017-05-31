@@ -47,9 +47,9 @@
     return self;
 }
 
-- (ORKPageStep *)pageStep {
-    if ([self.step isKindOfClass:[ORKPageStep class]]) {
-        return (ORKPageStep *)self.step;
+- (id <ORKPageStepSource> )pageStep {
+    if ([self.step conformsToProtocol:@protocol(ORKPageStepSource)]) {
+        return (id <ORKPageStepSource> )self.step;
     }
     return nil;
 }

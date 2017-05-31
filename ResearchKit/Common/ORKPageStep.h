@@ -33,6 +33,54 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+/**
+ The `ORKPageStepSource` is a protocol that can be used for presenting a list of model
+ objects in a UIPageViewController. Any `ORKStep` subclass that implements this protocol can be used with
+ an `ORKPageStepViewController` to display the list of items.
+ */
+@protocol ORKPageStepSource <NSObject>
+
+/**
+ Returns the step after the specified step, if there is one.
+ 
+ The page view controller calls this method to determine the step to display after the specified step.
+ The page view controller can also call this method every time the result updates, to determine if the
+ new result changes which steps are available.
+ 
+ @param identifier      The reference step identifier. Pass `nil` to specify the first step.
+ @param result          A snapshot of the current set of results.
+ 
+ @return The step that comes after the specified step, or `nil` if there isn't one.
+ */
+- (nullable ORKStep *)stepAfterStepWithIdentifier:(nullable NSString *)identifier withResult:(ORKTaskResult *)result;
+
+/**
+ Returns the step that precedes the specified step, if there is one.
+ 
+ The page view controller calls this method to determine the step to display before the specified step.
+ The page view controller can also call this method every time the result changes, to determine if the
+ new result changes which steps are available.
+ 
+ @param identifier      The reference step identifier.
+ @param result          A snapshot of the current set of results.
+ 
+ @return The step that precedes the reference step, or `nil` if there isn't one.
+ */
+- (nullable ORKStep *)stepBeforeStepWithIdentifier:(NSString *)identifier withResult:(ORKTaskResult *)result;
+
+
+/**
+ Returns the step that matches the specified identifier.
+ 
+ @param identifier  The identifier of the step to restore.
+ @return            The step that matches the specified identifier, or `nil` if there isn't one.
+ */
+- (nullable ORKStep *)stepWithIdentifier:(NSString *)identifier;
+
+@end
+
+
 /**
  The `ORKPageStep` class is a concrete subclass of `ORKStep`, used for presenting a subgrouping of
  `ORKStepViewController` views using a `UIPageViewController`.
@@ -49,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 
 ORK_CLASS_AVAILABLE
-@interface ORKPageStep : ORKStep
+@interface ORKPageStep : ORKStep <ORKPageStepSource>
 
 /**
  Returns an initialized page step using the specified identifier and array of steps.
@@ -82,43 +130,6 @@ ORK_CLASS_AVAILABLE
  array order.
  */
 @property (nonatomic, copy, readonly) NSArray<ORKStep *> *steps;
-
-/**
- Returns the step after the specified step, if there is one.
- 
- The page view controller calls this method to determine the step to display after the specified step. 
- The page view controller can also call this method every time the result updates, to determine if the 
- new result changes which steps are available.
- 
- @param identifier      The reference step identifier. Pass `nil` to specify the first step.
- @param result          A snapshot of the current set of results.
- 
- @return The step that comes after the specified step, or `nil` if there isn't one.
- */
-- (nullable ORKStep *)stepAfterStepWithIdentifier:(nullable NSString *)identifier withResult:(ORKTaskResult *)result;
-
-/**
- Returns the step that precedes the specified step, if there is one.
- 
- The page view controller calls this method to determine the step to display before the specified step. 
- The page view controller can also call this method every time the result changes, to determine if the 
- new result changes which steps are available.
- 
- @param identifier      The reference step identifier. 
- @param result          A snapshot of the current set of results.
- 
- @return The step that precedes the reference step, or `nil` if there isn't one.
- */
-- (nullable ORKStep *)stepBeforeStepWithIdentifier:(NSString *)identifier withResult:(ORKTaskResult *)result;
-
-
-/**
- Returns the step that matches the specified identifier.
- 
- @param identifier  The identifier of the step to restore.
- @return            The step that matches the specified identifier, or `nil` if there isn't one.
- */
-- (nullable ORKStep *)stepWithIdentifier:(NSString *)identifier;
 
 @end
 
