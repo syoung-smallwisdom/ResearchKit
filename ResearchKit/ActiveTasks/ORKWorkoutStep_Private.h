@@ -51,8 +51,6 @@ ORK_EXTERN NSString *const ORKHeartRateMonitorDeviceNameKey ORK_AVAILABLE_DECL;
 - (instancetype)initWithIdentifier:(NSString *)identifier
                           pageTask:(ORKOrderedTask *)task NS_DESIGNATED_INITIALIZER;
 
-- (BOOL)shouldStopRecordersOnFinishedWithStep:(ORKStep *)step;
-
 @end
 
 NS_ASSUME_NONNULL_END

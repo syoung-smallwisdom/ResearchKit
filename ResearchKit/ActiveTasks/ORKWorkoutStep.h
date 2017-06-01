@@ -162,6 +162,16 @@ HK_CLASS_AVAILABLE_IOS_WATCHOS(10_0, 3_0)
                            options:(ORKPredefinedTaskOption)options NS_DESIGNATED_INITIALIZER;
 
 /**
+ Returns an initialized workout step.
+ 
+ This step allows for customization of the page task used to vend the steps of the workout.
+ */
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                          pageTask:(ORKOrderedTask *)task
+              relativeDistanceOnly:(BOOL)relativeDistanceOnly
+                           options:(ORKPredefinedTaskOption)options;
+
+/**
  Returns a workout step initialized from data in the given unarchiver.
  
  A workout step can be serialized and deserialized with `NSKeyedArchiver`. Note
@@ -172,6 +182,21 @@ HK_CLASS_AVAILABLE_IOS_WATCHOS(10_0, 3_0)
  @return An initialized workout step.
  */
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
+/**
+ Should the recorders stop when the given step is finished? Default implementation is to stop the 
+ recorders with the last step in the page task.
+ @param     step    The step being finished.
+ @return            Whether or not to stop the recorders.
+ */
+- (BOOL)shouldStopRecordersOnFinishedWithStep:(ORKStep *)step;
+
+/**
+ Should the user be alerted to move outdoors? Default inplementation is to return `YES` if the workout 
+ configuration indicates that this is a outdoor task.
+ @return           Whether or not to alert the user to move outdoors if the GPS indicates that they are inside.
+ */
+- (BOOL)shouldAlertUserToMoveOutdoors;
 
 @end
 
