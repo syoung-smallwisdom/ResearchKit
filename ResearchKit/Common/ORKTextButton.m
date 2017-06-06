@@ -62,19 +62,33 @@
                                                object:nil];
     
     [self updateAppearance];
-    [self tintColorDidChange];
+    [self updateColor];
 }
 
 - (void)tintColorDidChange {
     [super tintColorDidChange];
-    
-    [self setTitleColor:[self tintColor] forState:UIControlStateNormal];
-    [self setTitleColor:[[self tintColor] colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
+    [self updateColor];
+}
+
+- (void)updateColor {
+    UIColor *titleColor = _titleColor ? : [self tintColor];
+    [self setTitleColor:titleColor forState:UIControlStateNormal];
+    [self setTitleColor:[titleColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
+}
+
+- (void)setTitleColor:(UIColor *)titleColor {
+    _titleColor = titleColor;
+    [self updateColor];
+}
+
+- (void)setTitleFont:(UIFont *)titleFont {
+    _titleFont = titleFont;
+    [self updateAppearance];
 }
 
 - (void)updateAppearance {
     
-    self.titleLabel.font = [[self class] defaultFont];
+    self.titleLabel.font = _titleFont ? : [[self class] defaultFont];
     [self invalidateIntrinsicContentSize];
 
 }

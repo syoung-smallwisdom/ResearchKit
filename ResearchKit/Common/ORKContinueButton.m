@@ -41,11 +41,9 @@ static const CGFloat ContinueButtonTouchMargin = 10;
     NSLayoutConstraint *_widthConstraint;
 }
 
-- (instancetype)initWithTitle:(NSString *)title isDoneButton:(BOOL)isDoneButton {
+- (instancetype)init {
     self = [super init];
     if (self) {
-        [self setTitle:title forState:UIControlStateNormal];
-        self.isDoneButton = isDoneButton;
         self.contentEdgeInsets = (UIEdgeInsets){.left=6, .right=6};
 
         [self setUpConstraints];

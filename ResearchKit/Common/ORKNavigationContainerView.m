@@ -34,6 +34,8 @@
 #import "ORKHelpers_Internal.h"
 #import "ORKSkin.h"
 
+#import "ORKStepViewController.h"
+
 
 @implementation ORKNavigationContainerView {
     NSLayoutConstraint *_skipToContinueButtonConstraint;
@@ -57,7 +59,7 @@
         }
         
         {
-            _continueButton = [[ORKContinueButton alloc] initWithTitle:@"" isDoneButton:NO];
+            _continueButton = [[[ORKStepViewController customContinueButtonClass] alloc] init] ? : [[ORKContinueButton alloc] init];
             _continueButton.alpha = 0;
             _continueButton.exclusiveTouch = YES;
             _continueButton.translatesAutoresizingMaskIntoConstraints = NO;
