@@ -601,8 +601,6 @@
 		FF5CA61C1D2C6453001660A3 /* ORKSignatureStep.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5CA61A1D2C6453001660A3 /* ORKSignatureStep.m */; };
 		FF5E3CCB1D23444400ECE4B7 /* ORKPageStepViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF5E3CC91D23444400ECE4B7 /* ORKPageStepViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF5E3CCC1D23444400ECE4B7 /* ORKPageStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5E3CCA1D23444400ECE4B7 /* ORKPageStepViewController.m */; };
-		FF77B6C21E831C77007B8C9E /* ORKOrderedTask+ORKPredefinedSurvey.h in Headers */ = {isa = PBXBuildFile; fileRef = FF77B6C01E831C77007B8C9E /* ORKOrderedTask+ORKPredefinedSurvey.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FF77B6C31E831C77007B8C9E /* ORKOrderedTask+ORKPredefinedSurvey.m in Sources */ = {isa = PBXBuildFile; fileRef = FF77B6C11E831C77007B8C9E /* ORKOrderedTask+ORKPredefinedSurvey.m */; };
 		FF6362A61E41382A0012638E /* ORKHeartRateCameraInstructionStep.h in Headers */ = {isa = PBXBuildFile; fileRef = FF6362A41E41382A0012638E /* ORKHeartRateCameraInstructionStep.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		FF6362A71E41382A0012638E /* ORKHeartRateCameraInstructionStep.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6362A51E41382A0012638E /* ORKHeartRateCameraInstructionStep.m */; };
 		FF70B76F1E67776900395640 /* ORKStartInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF70B76E1E67776900395640 /* ORKStartInterfaceController.swift */; };
@@ -662,6 +660,7 @@
 		FF919A6A1E81D255005C2A1E /* ORKConsentSignatureResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FF919A681E81D255005C2A1E /* ORKConsentSignatureResult.m */; };
 		FF919A6D1E81D3B0005C2A1E /* ORKPasscodeResult.h in Headers */ = {isa = PBXBuildFile; fileRef = FF919A6B1E81D3B0005C2A1E /* ORKPasscodeResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF919A6E1E81D3B0005C2A1E /* ORKPasscodeResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FF919A6C1E81D3B0005C2A1E /* ORKPasscodeResult.m */; };
+		FF99AAA11EE71FA8004EDC52 /* ORKTextButton_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = FF99AAA01EE71FA8004EDC52 /* ORKTextButton_Internal.h */; };
 		FFA0F1731E68E2D20082BBB1 /* NSError+JSONCodingObject.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA0F1711E68E2D20082BBB1 /* NSError+JSONCodingObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFA0F1741E68E2D20082BBB1 /* NSError+JSONCodingObject.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA0F1711E68E2D20082BBB1 /* NSError+JSONCodingObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFA0F1751E68E2D20082BBB1 /* NSError+JSONCodingObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA0F1721E68E2D20082BBB1 /* NSError+JSONCodingObject.m */; };
@@ -1361,8 +1360,6 @@
 		FF5CA61A1D2C6453001660A3 /* ORKSignatureStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKSignatureStep.m; sourceTree = "<group>"; };
 		FF5E3CC91D23444400ECE4B7 /* ORKPageStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKPageStepViewController.h; sourceTree = "<group>"; };
 		FF5E3CCA1D23444400ECE4B7 /* ORKPageStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKPageStepViewController.m; sourceTree = "<group>"; };
-		FF77B6C01E831C77007B8C9E /* ORKOrderedTask+ORKPredefinedSurvey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ORKOrderedTask+ORKPredefinedSurvey.h"; sourceTree = "<group>"; };
-		FF77B6C11E831C77007B8C9E /* ORKOrderedTask+ORKPredefinedSurvey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ORKOrderedTask+ORKPredefinedSurvey.m"; sourceTree = "<group>"; };
 		FF6362A41E41382A0012638E /* ORKHeartRateCameraInstructionStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKHeartRateCameraInstructionStep.h; sourceTree = "<group>"; };
 		FF6362A51E41382A0012638E /* ORKHeartRateCameraInstructionStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKHeartRateCameraInstructionStep.m; sourceTree = "<group>"; };
 		FF70B76E1E67776900395640 /* ORKStartInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ORKStartInterfaceController.swift; sourceTree = "<group>"; };
@@ -1416,6 +1413,7 @@
 		FF919A681E81D255005C2A1E /* ORKConsentSignatureResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKConsentSignatureResult.m; sourceTree = "<group>"; };
 		FF919A6B1E81D3B0005C2A1E /* ORKPasscodeResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKPasscodeResult.h; sourceTree = "<group>"; };
 		FF919A6C1E81D3B0005C2A1E /* ORKPasscodeResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKPasscodeResult.m; sourceTree = "<group>"; };
+		FF99AAA01EE71FA8004EDC52 /* ORKTextButton_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKTextButton_Internal.h; sourceTree = "<group>"; };
 		FFA0F1711E68E2D20082BBB1 /* NSError+JSONCodingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+JSONCodingObject.h"; sourceTree = "<group>"; };
 		FFA0F1721E68E2D20082BBB1 /* NSError+JSONCodingObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+JSONCodingObject.m"; sourceTree = "<group>"; };
 		FFA0F1771E68E60B0082BBB1 /* HKWorkoutEvent+JSONCodingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HKWorkoutEvent+JSONCodingObject.h"; sourceTree = "<group>"; };
@@ -2075,6 +2073,7 @@
 				86C40BD41A8D7C5C00081FAC /* ORKTapCountLabel.m */,
 				86C40BDB1A8D7C5C00081FAC /* ORKTextButton.h */,
 				86C40BDC1A8D7C5C00081FAC /* ORKTextButton.m */,
+				FF99AAA01EE71FA8004EDC52 /* ORKTextButton_Internal.h */,
 				86C40B5E1A8D7C5B00081FAC /* ORKTextFieldView.h */,
 				86C40B5F1A8D7C5B00081FAC /* ORKTextFieldView.m */,
 				BC01B0FA1B0EB99700863803 /* ORKTintedImageView_Internal.h */,
@@ -3286,6 +3285,7 @@
 				FFCDE3871E5E5B8400D2ED50 /* ORKWorkoutStep.h in Headers */,
 				86C40DFE1A8D7C5C00081FAC /* ORKConsentDocument.h in Headers */,
 				D442397D1AF17F7600559D96 /* ORKImageCaptureStepViewController.h in Headers */,
+				FF99AAA11EE71FA8004EDC52 /* ORKTextButton_Internal.h in Headers */,
 				86C40C4A1A8D7C5C00081FAC /* ORKSpatialSpanTargetView.h in Headers */,
 				FFCDE37E1E57BD7400D2ED50 /* ORKFitnessStep_Internal.h in Headers */,
 				866DA5221D63D04700C9AF3F /* ORKDataCollectionManager_Internal.h in Headers */,

@@ -51,10 +51,4 @@ ORK_CLASS_AVAILABLE
 @end
 
 
-@interface ORKTextButton ()
-
-- (void)init_ORKTextButton;
-
-@end
-
 NS_ASSUME_NONNULL_END
