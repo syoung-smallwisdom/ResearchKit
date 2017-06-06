@@ -115,11 +115,11 @@
     
     // Disable button for 0.5s
     ((UIView *)sender).userInteractionEnabled = NO;
-    ((ORKTextButton *)sender).isInTransition = YES;
+    ((id <ORKButton>)sender).isInTransition = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         // Re-enable skip button
         ((UIView *)sender).userInteractionEnabled = YES;
-        ((ORKTextButton *)sender).isInTransition = NO;
+        ((id <ORKButton>)sender).isInTransition = NO;
     });
 }
 
@@ -132,11 +132,11 @@
     
     // Disable button for 0.5s
     ((UIView *)sender).userInteractionEnabled = NO;
-    ((ORKTextButton *)sender).isInTransition = YES;
+    ((id <ORKButton>)sender).isInTransition = YES;
     _continueButtonJustTapped = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         _continueButtonJustTapped = NO;
-        ((ORKTextButton *)sender).isInTransition = NO;
+        ((id <ORKButton>)sender).isInTransition = NO;
         [self updateContinueAndSkipEnabled];
     });
 }

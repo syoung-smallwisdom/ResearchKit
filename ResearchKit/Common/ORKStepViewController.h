@@ -384,12 +384,12 @@ ORK_CLASS_AVAILABLE
 @property (nonatomic, readonly) BOOL hasBeenPresented;
 
 /**
- Get the custom class for the continue button. Must be a subclass of `ORKTextButton`.
+ Get the custom class for the continue button. Must implement `ORKButton` protocol and inherit from `UIButton`.
  */
 + (nullable Class)customContinueButtonClass;
 
 /**
- Set the custom class for the continue button. Must be a subclass of `ORKTextButton`.
+ Set the custom class for the continue button. Must implement `ORKButton` protocol and inherit from `UIButton`.
  */
 + (void)setCustomContinueButtonClass: (nullable Class)customContinueButtonClass;
 

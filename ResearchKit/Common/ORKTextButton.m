@@ -62,23 +62,13 @@
 }
 
 - (void)updateColor {
-    UIColor *titleColor = _titleColor ? : [self tintColor];
+    UIColor *titleColor = [self tintColor];
     [self setTitleColor:titleColor forState:UIControlStateNormal];
     [self setTitleColor:[titleColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
 }
 
-- (void)setTitleColor:(UIColor *)titleColor {
-    _titleColor = titleColor;
-    [self updateColor];
-}
-
-- (void)setTitleFont:(UIFont *)titleFont {
-    _titleFont = titleFont;
-    [self updateAppearance];
-}
-
 - (void)updateAppearance {
-    self.titleLabel.font = _titleFont ? : [[self class] defaultFont];
+    self.titleLabel.font = [[self class] defaultFont];
     [self invalidateIntrinsicContentSize];
 }
 
