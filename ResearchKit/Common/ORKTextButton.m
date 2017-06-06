@@ -42,6 +42,11 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        // Only sign up for appearance changes if not in a storyboard or nib
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateAppearance)
+                                                     name:UIContentSizeCategoryDidChangeNotification
+                                                   object:nil];
         [self init_ORKTextButton];
     }
     return self;
@@ -56,11 +61,6 @@
 }
 
 - (void)init_ORKTextButton {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateAppearance)
-                                                 name:UIContentSizeCategoryDidChangeNotification
-                                               object:nil];
-    
     [self updateAppearance];
     [self updateColor];
 }
@@ -87,10 +87,8 @@
 }
 
 - (void)updateAppearance {
-    
     self.titleLabel.font = _titleFont ? : [[self class] defaultFont];
     [self invalidateIntrinsicContentSize];
-
 }
 
 -(void)setEnabled:(BOOL)enabled {
