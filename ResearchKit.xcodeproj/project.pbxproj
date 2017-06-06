@@ -283,7 +283,7 @@
 		86C40CD61A8D7C5C00081FAC /* ORKTableContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C40B5D1A8D7C5B00081FAC /* ORKTableContainerView.m */; };
 		86C40CD81A8D7C5C00081FAC /* ORKTextFieldView.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C40B5E1A8D7C5B00081FAC /* ORKTextFieldView.h */; };
 		86C40CDA1A8D7C5C00081FAC /* ORKTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C40B5F1A8D7C5B00081FAC /* ORKTextFieldView.m */; };
-		86C40CDC1A8D7C5C00081FAC /* ORKTintedImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C40B601A8D7C5B00081FAC /* ORKTintedImageView.h */; };
+		86C40CDC1A8D7C5C00081FAC /* ORKTintedImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C40B601A8D7C5B00081FAC /* ORKTintedImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		86C40CDE1A8D7C5C00081FAC /* ORKTintedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C40B611A8D7C5B00081FAC /* ORKTintedImageView.m */; };
 		86C40CE41A8D7C5C00081FAC /* ORKAnswerFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C40B641A8D7C5B00081FAC /* ORKAnswerFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		86C40CE61A8D7C5C00081FAC /* ORKAnswerFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C40B651A8D7C5B00081FAC /* ORKAnswerFormat.m */; };
