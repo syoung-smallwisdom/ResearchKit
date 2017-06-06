@@ -38,10 +38,6 @@ NS_ASSUME_NONNULL_BEGIN
 ORK_CLASS_AVAILABLE
 @interface ORKContinueButton : ORKBorderedButton
 
-- (instancetype)initWithTitle:(NSString *)title isDoneButton:(BOOL)isDoneButton;
-
-@property (nonatomic) BOOL isDoneButton;
-
 @end
 
 NS_ASSUME_NONNULL_END

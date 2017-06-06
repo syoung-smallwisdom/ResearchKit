@@ -34,19 +34,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol ORKButton <NSObject>
+
+@property (nonatomic) BOOL isInTransition;
+
+- (instancetype)init;
+
+@end
+
 /**
  "Skip" button or "Learn More" button.
  */
 ORK_CLASS_AVAILABLE
-@interface ORKTextButton : UIButton
+@interface ORKTextButton : UIButton <ORKButton>
+
 @property (nonatomic) BOOL isInTransition;
-@end
-
-
-@interface ORKTextButton ()
-
-- (void)init_ORKTextButton;
 
 @end
+
 
 NS_ASSUME_NONNULL_END

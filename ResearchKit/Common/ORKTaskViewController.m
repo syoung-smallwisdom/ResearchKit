@@ -904,10 +904,7 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
     
     
     if ([self isStepLastBeginningInstructionStep:step]) {
-        // Check again, in case it's a user-supplied view controller for this step that's not an ORKInstructionStepViewController.
-        if ([viewController isKindOfClass:[ORKInstructionStepViewController class]]) {
-            [(ORKInstructionStepViewController *)viewController useAppropriateButtonTitleAsLastBeginningInstructionStep];
-        }
+        viewController.continueButtonTitle = ORKLocalizedString(@"BUTTON_GET_STARTED",nil);
     }
     
     ORKStepViewController *fromController = self.currentStepViewController;
