@@ -229,8 +229,8 @@
         stepResult = [self.initialResult stepResultForStepIdentifier:step.identifier];
     }
     
-    // Ask the delegate if there is a step view controller to vend, if not, then use the view controller
-    // vended by the step
+    // Ask the delegate if there is a step view controller to vend. If not, then use the view controller
+    // vended by the step.
     ORKStepViewController *viewController = nil;
     ORKTaskViewController *taskViewController = self.taskViewController;
     id <ORKTaskViewControllerDelegate> taskDelegate = taskViewController.delegate;

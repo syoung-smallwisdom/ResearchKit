@@ -193,7 +193,7 @@ HK_CLASS_AVAILABLE_IOS_WATCHOS(10_0, 3_0)
 
 /**
  Should the user be alerted to move outdoors? Default inplementation is to return `YES` if the workout 
- configuration indicates that this is a outdoor task.
+ configuration indicates that this is an outdoor task.
  @return           Whether or not to alert the user to move outdoors if the GPS indicates that they are inside.
  */
 - (BOOL)shouldAlertUserToMoveOutdoors;
