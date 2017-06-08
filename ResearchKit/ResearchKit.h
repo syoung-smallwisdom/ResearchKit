@@ -123,5 +123,18 @@
 
 #import <ResearchKit/ORKDeprecated.h>
 
+#import <ResearchKit/ORKPicker.h>
+#import <ResearchKit/ORKFormItemCell.h>
+#import <ResearchKit/ORKTextFieldView.h>
+#import <ResearchKit/ORKDefaultFont.h>
+#import <ResearchKit/ORKAnswerTextView.h>
+#import <ResearchKit/ORKAnswerTextField.h>
+#import <ResearchKit/ORKTableViewCell.h>
+#import <ResearchKit/ORKSurveyAnswerCellForText.h>
+#import <ResearchKit/ORKLabel.h>
+#import <ResearchKit/ORKSelectionTitleLabel.h>
+#import <ResearchKit/ORKChoiceViewCell.h>
+#import <ResearchKit/ORKQuestionStepViewController.h>
+
 #endif
 

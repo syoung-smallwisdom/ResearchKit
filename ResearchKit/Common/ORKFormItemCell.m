@@ -58,10 +58,6 @@ static const CGFloat HorizontalMargin = 15.0;
 @interface ORKFormItemCell ()
 
 - (void)cellInit NS_REQUIRES_SUPER;
-- (void)inputValueDidChange NS_REQUIRES_SUPER;
-- (void)inputValueDidClear NS_REQUIRES_SUPER;
-- (void)defaultAnswerDidChange NS_REQUIRES_SUPER;
-- (void)answerDidChange;
 
 // For use when setting the answer in response to user action
 - (void)ork_setAnswer:(id)answer;
@@ -238,8 +234,6 @@ static const CGFloat HorizontalMargin = 15.0;
 #pragma mark - ORKFormItemTextFieldBasedCell
 
 @interface ORKFormItemTextFieldBasedCell ()
-
-- (ORKUnitTextField *)textField;
 
 @property (nonatomic, readonly) ORKTextFieldView *textFieldView;
 @property (nonatomic, assign) BOOL editingHighlight;

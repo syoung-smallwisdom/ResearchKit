@@ -383,6 +383,8 @@ ORK_CLASS_AVAILABLE
  */
 @property (nonatomic, readonly) BOOL hasBeenPresented;
 
+@property (nonatomic, strong, nullable) UIBarButtonItem *continueButtonItem;
+
 @end
 
 NS_ASSUME_NONNULL_END

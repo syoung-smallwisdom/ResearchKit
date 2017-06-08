@@ -31,9 +31,10 @@
 
 @import UIKit;
 
-
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol ORKPicker;
+@class ORKUnitTextField;
 @class ORKFormItem;
 @class ORKFormItemCell;
 
@@ -50,6 +51,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface ORKFormItemCell : UITableViewCell
+
+-(ORKFormItem*)formItem;
+- (void)inputValueDidChange NS_REQUIRES_SUPER;
+- (void)inputValueDidClear NS_REQUIRES_SUPER;
+- (void)defaultAnswerDidChange NS_REQUIRES_SUPER;
+- (void)answerDidChange;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
                                formItem:(ORKFormItem *)formItem
@@ -69,12 +76,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface ORKFormItemTextFieldBasedCell : ORKFormItemCell <UITextFieldDelegate>
-
+- (ORKUnitTextField *)textField;
 @end
 
 
 @interface ORKFormItemTextFieldCell : ORKFormItemTextFieldBasedCell
-
+- (void)inputValueDidChange;
 @end
 
 
@@ -99,7 +106,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface ORKFormItemPickerCell : ORKFormItemTextFieldBasedCell
-
+- (id<ORKPicker>)picker;
+- (void)inputValueDidChange;
 @end
 
 

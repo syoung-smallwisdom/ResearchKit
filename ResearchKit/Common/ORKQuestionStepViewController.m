@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, ORKQuestionSection) {
 };
 
 
-@interface ORKQuestionStepViewController () <UITableViewDataSource,UITableViewDelegate, ORKSurveyAnswerCellDelegate> {
+@interface ORKQuestionStepViewController () <ORKSurveyAnswerCellDelegate> {
     id _answer;
     
     ORKTableContainerView *_tableContainer;
@@ -87,7 +87,6 @@ typedef NS_ENUM(NSInteger, ORKQuestionSection) {
 @property (nonatomic, strong) ORKQuestionStepView *questionView;
 
 @property (nonatomic, strong) ORKAnswerFormat *answerFormat;
-@property (nonatomic, copy) id<NSCopying, NSObject, NSCoding> answer;
 
 @property (nonatomic, strong) ORKContinueButton *continueActionButton;
 
@@ -99,6 +98,7 @@ typedef NS_ENUM(NSInteger, ORKQuestionSection) {
 // If `hasChangedAnswer`, then a new `defaultAnswer` should not change the answer
 @property (nonatomic, assign) BOOL hasChangedAnswer;
 
+@property (nonatomic, copy) id<NSCopying, NSObject, NSCoding> answer;
 @property (nonatomic, copy) id<NSCopying, NSObject, NSCoding> originalAnswer;
 
 @end
@@ -493,6 +493,10 @@ typedef NS_ENUM(NSInteger, ORKQuestionSection) {
     }
     
     [self.tableView reloadData];
+}
+
+- (BOOL)hasNonNilAnswer {
+    return _answer != nil;
 }
 
 - (id<NSCopying, NSCoding, NSObject>)answer {

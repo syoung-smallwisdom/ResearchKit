@@ -53,6 +53,26 @@ NS_ASSUME_NONNULL_BEGIN
     id _answer;
 }
 
+- (void)ork_setAnswer:(id)answer;
+- (void)showValidityAlertWithMessage:(NSString *)text;
+- (void)showValidityAlertWithTitle:(NSString *)title message:(NSString *)message;
+- (void)prepareView;
+
++ (CGFloat)suggestedCellHeightForView:(UIView *)view;
+
+- (NSArray *)suggestedCellHeightConstraintsForView:(UIView *)view;
+
+- (void)answerDidChange;
+
++ (BOOL)shouldDisplayWithSeparators;
+
+// Get full width layout for some subclass cells
++ (NSLayoutConstraint *)fullWidthLayoutConstraint:(UIView *)view;
+
+// Handle keyboard
+@property (nonatomic) UIEdgeInsets cachedContentInsets;
+@property (nonatomic) UIEdgeInsets cachedScrollIndicatorInsets;
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier
                          step:(ORKQuestionStep *)step
@@ -70,29 +90,5 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
-@interface ORKSurveyAnswerCell (ORKSurveyAnswerCellInternal)
-
-- (void)prepareView;
-
-- (nullable UITextView *)textView;
-
-+ (CGFloat)suggestedCellHeightForView:(UIView *)view;
-
-- (NSArray *)suggestedCellHeightConstraintsForView:(UIView *)view;
-
-- (void)ork_setAnswer:(nullable id)answer;
-- (void)answerDidChange;
-
-+ (BOOL)shouldDisplayWithSeparators;
-
-- (void)showValidityAlertWithMessage:(nullable NSString *)text;
-
-- (void)showValidityAlertWithTitle:(NSString *)title message:(NSString *)message;
-
-// Get full width layout for some subclass cells 
-+ (NSLayoutConstraint *)fullWidthLayoutConstraint:(UIView *)view;
-
-@end
 
 NS_ASSUME_NONNULL_END

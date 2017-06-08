@@ -47,7 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, nullable) UIBarButtonItem *internalSkipButtonItem;
 
-@property (nonatomic, strong, nullable) UIBarButtonItem *continueButtonItem;
 @property (nonatomic, strong, nullable) UIBarButtonItem *learnMoreButtonItem;
 @property (nonatomic, strong, nullable) UIBarButtonItem *skipButtonItem;
 

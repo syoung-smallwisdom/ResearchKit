@@ -48,6 +48,9 @@ NS_ASSUME_NONNULL_BEGIN
 ORK_CLASS_AVAILABLE
 @interface ORKFormStepViewController : ORKStepViewController
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
+- (BOOL)continueButtonEnabled;
+- (void)showValidityAlertWithMessage:(NSString *)text;
 - (BOOL)isFormItemValidFor:(NSString*)formItemIdentifier;
 
 @end

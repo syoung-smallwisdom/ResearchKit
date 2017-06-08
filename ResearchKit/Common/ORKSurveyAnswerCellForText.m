@@ -32,7 +32,6 @@
 #import "ORKSurveyAnswerCellForText.h"
 
 #import "ORKAnswerTextField.h"
-#import "ORKAnswerTextView.h"
 
 #import "ORKAnswerFormat_Internal.h"
 #import "ORKQuestionStep_Internal.h"
@@ -41,10 +40,8 @@
 #import "ORKSkin.h"
 
 
-@interface ORKSurveyAnswerCellForText () <UITextViewDelegate>
-
+@interface ORKSurveyAnswerCellForText ()
 @property (nonatomic, strong) ORKAnswerTextView *textView;
-
 @end
 
 
