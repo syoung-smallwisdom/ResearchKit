@@ -33,7 +33,6 @@
 #import <ResearchKit/ORKTypes.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
 ORK_CLASS_AVAILABLE
 @protocol ORKPickerDelegate <NSObject>
 
