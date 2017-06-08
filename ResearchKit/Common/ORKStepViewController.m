@@ -58,6 +58,20 @@
 
 @implementation ORKStepViewController
 
+static Class __customContinueButtonClass;
+
++ (Class)customContinueButtonClass {
+    return __customContinueButtonClass;
+}
+
++ (void)setCustomContinueButtonClass: (Class)customContinueButtonClass {
+    if (![customContinueButtonClass isSubclassOfClass:[UIButton class]]) {
+        NSAssert(NO, @"Class is not a subclass of UIButton");
+        return;
+    }
+    __customContinueButtonClass = customContinueButtonClass;
+}
+
 - (void)initializeInternalButtonItems {
     _internalBackButtonItem = [UIBarButtonItem ork_backBarButtonItemWithTarget:self action:@selector(goBackward)];
     _internalBackButtonItem.accessibilityLabel = ORKLocalizedString(@"AX_BUTTON_BACK", nil);

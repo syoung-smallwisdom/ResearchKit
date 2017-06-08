@@ -87,6 +87,8 @@
 #import <ResearchKit/ORKBorderedButton.h>
 #import <ResearchKit/ORKContinueButton.h>
 
+#import <ResearchKit/ORKTintedImageView.h>
+
 #import <ResearchKit/ORKStepViewController.h>
 #import <ResearchKit/ORKActiveStepViewController.h>
 #import <ResearchKit/ORKCompletionStepViewController.h>

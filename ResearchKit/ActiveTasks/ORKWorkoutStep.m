@@ -80,6 +80,17 @@ ORKWorkoutResultIdentifier const ORKWorkoutResultIdentifierDistanceTraveled = @"
 }
 
 - (instancetype)initWithIdentifier:(NSString *)identifier
+                          pageTask:(ORKOrderedTask *)task
+              relativeDistanceOnly:(BOOL)relativeDistanceOnly
+                           options:(ORKPredefinedTaskOption)options {
+    self = [self initWithIdentifier:identifier pageTask:task];
+    if (self) {
+        [self ork_commonInitWithRelativeDistanceOnly:relativeDistanceOnly options:options];
+    }
+    return self;
+}
+
+- (instancetype)initWithIdentifier:(NSString *)identifier
                        motionSteps:(NSArray<ORKStep *> *)motionSteps
                           restStep:(nullable ORKHeartRateCaptureStep *)restStep
               relativeDistanceOnly:(BOOL)relativeDistanceOnly
@@ -136,18 +147,21 @@ ORKWorkoutResultIdentifier const ORKWorkoutResultIdentifierDistanceTraveled = @"
     
     self = [super initWithIdentifier:identifier steps:steps];
     if (self) {
-
-        // default workout is outdoor walking
-        _workoutConfiguration = [[HKWorkoutConfiguration alloc] init];
-        _workoutConfiguration.activityType = HKWorkoutActivityTypeWalking;
-        _workoutConfiguration.locationType = HKWorkoutSessionLocationTypeOutdoor;
-        
-        // If the heart rate isn't excluded then add that recorder
-        _recorderConfigurations = [ORKFitnessStep recorderConfigurationsWithOptions:options
-                                                               relativeDistanceOnly:relativeDistanceOnly
-                                                                      standingStill:YES];
+        [self ork_commonInitWithRelativeDistanceOnly:relativeDistanceOnly options:options];
     }
     return self;
+}
+
+- (void)ork_commonInitWithRelativeDistanceOnly:(BOOL)relativeDistanceOnly
+                                       options:(ORKPredefinedTaskOption)options {
+    // default workout is outdoor walking
+    _workoutConfiguration = [[HKWorkoutConfiguration alloc] init];
+    _workoutConfiguration.activityType = HKWorkoutActivityTypeWalking;
+    _workoutConfiguration.locationType = HKWorkoutSessionLocationTypeOutdoor;
+    
+    _recorderConfigurations = [ORKFitnessStep recorderConfigurationsWithOptions:options
+                                                           relativeDistanceOnly:relativeDistanceOnly
+                                                                  standingStill:YES];
 }
 
 - (Class)stepViewControllerClass {
@@ -161,7 +175,7 @@ ORKWorkoutResultIdentifier const ORKWorkoutResultIdentifierDistanceTraveled = @"
         return [self.pageTask stepWithIdentifier:(nextIdentifier ? : ORKWorkoutBeforeCountdownStepIdentifier)];
     } else {
         ORKStep *nextStep = [super stepAfterStepWithIdentifier:identifier withResult:result];
-        if ((self.workoutConfiguration.locationType == HKWorkoutSessionLocationTypeOutdoor) &&
+        if ([self shouldAlertUserToMoveOutdoors] &&
             [identifier isEqualToString:ORKWorkoutBeforeStepIdentifier]) {
             // If this is an outdoor workout and the accuracy indicates that the user is indoors
             // then instruct them to move outdoors.
@@ -174,17 +188,12 @@ ORKWorkoutResultIdentifier const ORKWorkoutResultIdentifierDistanceTraveled = @"
     }
 }
 
-- (ORKStep *)stepBeforeStepWithIdentifier:(NSString *)identifier withResult:(ORKTaskResult *)result {
-    // Cannot go back
-    return nil;
-}
-
-- (BOOL)allowsBackNavigation {
-    return NO;
-}
-
 - (BOOL)shouldStopRecordersOnFinishedWithStep:(ORKStep *)step {
     return [step.identifier isEqualToString:[self.steps lastObject].identifier];
+}
+
+- (BOOL)shouldAlertUserToMoveOutdoors {
+    return (self.workoutConfiguration.locationType == HKWorkoutSessionLocationTypeOutdoor);
 }
 
 - (ORKQuestionStep *)createOutdoorsInstructionStepWithNextStep:(ORKStep *)nextStep {

@@ -385,6 +385,16 @@ ORK_CLASS_AVAILABLE
 
 @property (nonatomic, strong, nullable) UIBarButtonItem *continueButtonItem;
 
+/**
+ Get the custom class for the continue button. Must implement `ORKButton` protocol and inherit from `UIButton`.
+ */
++ (nullable Class)customContinueButtonClass;
+
+/**
+ Set the custom class for the continue button. Must implement `ORKButton` protocol and inherit from `UIButton`.
+ */
++ (void)setCustomContinueButtonClass: (nullable Class)customContinueButtonClass;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -47,36 +47,29 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self init_ORKTextButton];
-    }
-    return self;
-}
-
 - (void)init_ORKTextButton {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateAppearance)
                                                  name:UIContentSizeCategoryDidChangeNotification
                                                object:nil];
-    
     [self updateAppearance];
-    [self tintColorDidChange];
+    [self updateColor];
 }
 
 - (void)tintColorDidChange {
     [super tintColorDidChange];
-    
-    [self setTitleColor:[self tintColor] forState:UIControlStateNormal];
-    [self setTitleColor:[[self tintColor] colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
+    [self updateColor];
+}
+
+- (void)updateColor {
+    UIColor *titleColor = [self tintColor];
+    [self setTitleColor:titleColor forState:UIControlStateNormal];
+    [self setTitleColor:[titleColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
 }
 
 - (void)updateAppearance {
-    
     self.titleLabel.font = [[self class] defaultFont];
     [self invalidateIntrinsicContentSize];
-
 }
 
 -(void)setEnabled:(BOOL)enabled {

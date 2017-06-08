@@ -228,8 +228,16 @@
         // If the pageResult does not carry a step result, then check the initial result
         stepResult = [self.initialResult stepResultForStepIdentifier:step.identifier];
     }
-    ORKStepViewController *viewController = [step instantiateStepViewControllerWithResult:stepResult];
-    return viewController;
+    
+    // Ask the delegate if there is a step view controller to vend. If not, then use the view controller
+    // vended by the step.
+    ORKStepViewController *viewController = nil;
+    ORKTaskViewController *taskViewController = self.taskViewController;
+    id <ORKTaskViewControllerDelegate> taskDelegate = taskViewController.delegate;
+    if ([taskDelegate respondsToSelector:@selector(taskViewController:viewControllerForStep:)]) {
+        viewController = [taskDelegate taskViewController:taskViewController viewControllerForStep:step];
+    }
+    return viewController ? : [step instantiateStepViewControllerWithResult:stepResult];
 }
 
 - (void)stepViewControllerWillAppear:(ORKStepViewController *)stepViewController {
