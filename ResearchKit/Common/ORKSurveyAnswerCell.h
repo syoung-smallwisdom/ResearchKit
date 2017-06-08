@@ -54,25 +54,28 @@ ORK_CLASS_AVAILABLE
     id _answer;
 }
 
+/**
+ * This method should only be used by sub-classes, as it internally sets the answer
+ * that must align with the expected answer type
+ * It also triggers a call to the answerDidChangeTo delegate method
+ */
 - (void)ork_setAnswer:(id)answer;
+
+/**
+ * Expose validity alert message to allow for custom alert messaging
+ */
+
 - (void)showValidityAlertWithMessage:(NSString *)text;
+
+/**
+ * Expose validity alert message to allow for custom alert messaging
+ */
 - (void)showValidityAlertWithTitle:(NSString *)title message:(NSString *)message;
-- (void)prepareView;
 
-+ (CGFloat)suggestedCellHeightForView:(UIView *)view;
-
-- (NSArray *)suggestedCellHeightConstraintsForView:(UIView *)view;
-
+/*
+ * This method is used to force the SurveyAnswerCell to reassess it's answer value
+ */
 - (void)answerDidChange;
-
-+ (BOOL)shouldDisplayWithSeparators;
-
-// Get full width layout for some subclass cells
-+ (NSLayoutConstraint *)fullWidthLayoutConstraint:(UIView *)view;
-
-// Handle keyboard
-@property (nonatomic) UIEdgeInsets cachedContentInsets;
-@property (nonatomic) UIEdgeInsets cachedScrollIndicatorInsets;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier
@@ -88,6 +91,21 @@ ORK_CLASS_AVAILABLE
 
 // Gives an opportunity for cells to prevent navigation if the value has not been set
 - (BOOL)shouldContinue;
+
+@end
+
+@interface ORKSurveyAnswerCell (ORKSurveyAnswerCellInternal)
+
+- (void)prepareView;
+
++ (CGFloat)suggestedCellHeightForView:(UIView *)view;
+
+- (NSArray *)suggestedCellHeightConstraintsForView:(UIView *)view;
+
++ (BOOL)shouldDisplayWithSeparators;
+
+// Get full width layout for some subclass cells
++ (NSLayoutConstraint *)fullWidthLayoutConstraint:(UIView *)view;
 
 @end
 

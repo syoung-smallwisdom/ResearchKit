@@ -37,8 +37,12 @@
 NS_ASSUME_NONNULL_BEGIN
 ORK_CLASS_AVAILABLE
 @interface ORKSurveyAnswerCellForText : ORKSurveyAnswerCell <UITextViewDelegate>
-- (void)textDidChange;
-- (ORKAnswerTextView*) textView;
+
+/**
+ * Allow exxternal classes to set textview's text for answer cell
+ */
+- (void) setText:(nullable NSString*)text;
+
 @end
 
 ORK_CLASS_AVAILABLE

@@ -383,8 +383,6 @@ ORK_CLASS_AVAILABLE
  */
 @property (nonatomic, readonly) BOOL hasBeenPresented;
 
-@property (nonatomic, strong, nullable) UIBarButtonItem *continueButtonItem;
-
 /**
  Get the custom class for the continue button. Must implement `ORKButton` protocol and inherit from `UIButton`.
  */

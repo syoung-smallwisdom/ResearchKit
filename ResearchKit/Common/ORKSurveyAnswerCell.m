@@ -38,6 +38,11 @@
 
 - (nullable UITextView *)textView;
 
+// Handle keyboard
+@property (nonatomic) UIEdgeInsets cachedContentInsets;
+@property (nonatomic) UIEdgeInsets cachedScrollIndicatorInsets;
+
+
 @end
 
 

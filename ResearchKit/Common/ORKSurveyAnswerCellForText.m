@@ -49,6 +49,11 @@
     NSInteger _maxLength;
 }
 
+- (void) setText:(NSString*)text {
+    self.textView.text = text;
+    [self textDidChange];
+}
+
 - (void)applyAnswerFormat {
     ORKAnswerFormat *answerFormat = [self.step.answerFormat impliedAnswerFormat];
     

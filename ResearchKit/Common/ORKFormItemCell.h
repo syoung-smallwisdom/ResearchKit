@@ -54,10 +54,29 @@ ORK_CLASS_AVAILABLE
 ORK_CLASS_AVAILABLE
 @interface ORKFormItemCell : UITableViewCell
 
+/**
+ * The form item associated with this cell
+ */
 -(ORKFormItem*)formItem;
+
+/**
+ * Notify the form item cell that value has been changed outside this class
+ */
 - (void)inputValueDidChange NS_REQUIRES_SUPER;
+
+/**
+ * Notify the form item cell that value has been cleared outside this class
+ */
 - (void)inputValueDidClear NS_REQUIRES_SUPER;
+
+/**
+ * Notify the form item cell that the default answer has been changed outside this class
+ */
 - (void)defaultAnswerDidChange NS_REQUIRES_SUPER;
+
+/**
+ * Notify the form item cell that the answer has been changed outside this class
+ */
 - (void)answerDidChange;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
@@ -78,11 +97,17 @@ ORK_CLASS_AVAILABLE
 
 ORK_CLASS_AVAILABLE
 @interface ORKFormItemTextFieldBasedCell : ORKFormItemCell <UITextFieldDelegate>
+/**
+ * The textfield that is associated with this form item cell
+ */
 - (ORKUnitTextField *)textField;
 @end
 
 ORK_CLASS_AVAILABLE
 @interface ORKFormItemTextFieldCell : ORKFormItemTextFieldBasedCell
+/**
+ * Notify the form item cell that value has been changed outside this class
+ */
 - (void)inputValueDidChange;
 @end
 
@@ -108,8 +133,17 @@ ORK_CLASS_AVAILABLE
 
 ORK_CLASS_AVAILABLE
 @interface ORKFormItemPickerCell : ORKFormItemTextFieldBasedCell
+
+/**
+ * The ORKPicker that is associated with this form item cell
+ */
 - (id<ORKPicker>)picker;
+
+/**
+ * Notify the form item cell that value has been changed outside this class
+ */
 - (void)inputValueDidChange;
+
 @end
 
 
