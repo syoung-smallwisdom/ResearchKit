@@ -30,10 +30,11 @@
 
 
 @import UIKit;
-
+#import <ResearchKit/ORKTypes.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+ORK_CLASS_AVAILABLE
 @protocol ORKPickerDelegate <NSObject>
 
 - (void)picker:(id)picker answerDidChangeTo:(nullable id)answer;
@@ -43,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class ORKAnswerFormat;
 
+ORK_CLASS_AVAILABLE
 @protocol ORKPicker <NSObject>
 
 - (instancetype) initWithAnswerFormat:(ORKAnswerFormat *)answerFormat answer:(nullable id)answer pickerDelegate:(id<ORKPickerDelegate>)delegate;
@@ -59,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
+ORK_CLASS_AVAILABLE
 @interface ORKPicker : NSObject
 
 + (id<ORKPicker>)pickerWithAnswerFormat:(ORKAnswerFormat *)answerFormat answer:(nullable id)answer delegate:(id<ORKPickerDelegate>) delegate;

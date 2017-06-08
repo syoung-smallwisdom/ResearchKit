@@ -30,6 +30,7 @@
 
 
 @import UIKit;
+#import <ResearchKit/ORKTypes.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -38,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class ORKFormItem;
 @class ORKFormItemCell;
 
+ORK_CLASS_AVAILABLE
 @protocol ORKFormItemCellDelegate <NSObject>
 
 @required
@@ -49,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
+ORK_CLASS_AVAILABLE
 @interface ORKFormItemCell : UITableViewCell
 
 -(ORKFormItem*)formItem;
@@ -74,12 +76,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
+ORK_CLASS_AVAILABLE
 @interface ORKFormItemTextFieldBasedCell : ORKFormItemCell <UITextFieldDelegate>
 - (ORKUnitTextField *)textField;
 @end
 
-
+ORK_CLASS_AVAILABLE
 @interface ORKFormItemTextFieldCell : ORKFormItemTextFieldBasedCell
 - (void)inputValueDidChange;
 @end
@@ -104,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
+ORK_CLASS_AVAILABLE
 @interface ORKFormItemPickerCell : ORKFormItemTextFieldBasedCell
 - (id<ORKPicker>)picker;
 - (void)inputValueDidChange;

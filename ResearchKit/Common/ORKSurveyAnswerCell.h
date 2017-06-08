@@ -31,13 +31,14 @@
 
 @import UIKit;
 #import "ORKTableViewCell.h"
-
+#import <ResearchKit/ORKTypes.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class ORKQuestionStep;
 @class ORKSurveyAnswerCell;
 
+ORK_CLASS_AVAILABLE
 @protocol ORKSurveyAnswerCellDelegate
 
 @required
@@ -47,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
+ORK_CLASS_AVAILABLE
 @interface ORKSurveyAnswerCell : ORKTableViewCell {
 @protected
     id _answer;
