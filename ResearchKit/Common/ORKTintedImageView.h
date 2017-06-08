@@ -30,12 +30,14 @@
 
 
 @import UIKit;
+#import "ORKDefines.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 UIImage *ORKImageByTintingImage(UIImage *image, UIColor *tintColor, CGFloat scale);
 
+ORK_CLASS_AVAILABLE
 @interface ORKTintedImageView : UIImageView
 
 @property (nonatomic, assign) BOOL shouldApplyTint;
