@@ -65,6 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Manages a text field with unit label and a clear button: [text unit    (x)]
  */
+ORK_CLASS_AVAILABLE
 @interface ORKTextFieldView : UIView
 
 @property (nonatomic, strong, readonly) ORKUnitTextField *textField;

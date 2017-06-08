@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class ORKSelectionTitleLabel;
 @class ORKSelectionSubTitleLabel;
 
+ORK_CLASS_AVAILABLE
 @interface ORKChoiceViewCell : UITableViewCell
 
 @property (nonatomic, strong, readonly) ORKSelectionTitleLabel *shortLabel;

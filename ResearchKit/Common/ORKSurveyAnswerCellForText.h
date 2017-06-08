@@ -34,13 +34,13 @@
 #import "ORKAnswerTextView.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
+ORK_CLASS_AVAILABLE
 @interface ORKSurveyAnswerCellForText : ORKSurveyAnswerCell <UITextViewDelegate>
 - (void)textDidChange;
 - (ORKAnswerTextView*) textView;
 @end
 
-
+ORK_CLASS_AVAILABLE
 @interface ORKSurveyAnswerCellForTextField : ORKSurveyAnswerCell <UITextFieldDelegate>
 
 @end
