@@ -49,7 +49,8 @@
 
 NSString *const ORKWorkoutBeforeStepIdentifier = @"heartRate.before";
 NSString *const ORKWorkoutAfterStepIdentifier = @"heartRate.after";
-NSString *const ORKWorkoutCameraInstructionStepIdentifier = @"heartRate.cameraInstruction";
+NSString *const ORKWorkoutBeforeCameraInstructionStepIdentifier = @"heartRate.before.cameraInstruction";
+NSString *const ORKWorkoutAfterCameraInstructionStepIdentifier = @"heartRate.after.cameraInstruction";
 NSString *const ORKWorkoutBeforeCountdownStepIdentifier = @"heartRate.before.countdown";
 NSString *const ORKWorkoutAfterCountdownStepIdentifier = @"heartRate.after.countdown";
 NSString *const ORKWorkoutOutdoorInstructionStepIdentifier = @"outdoor.instruction";
@@ -97,7 +98,8 @@ ORKWorkoutResultIdentifier const ORKWorkoutResultIdentifierDistanceTraveled = @"
                            options:(ORKPredefinedTaskOption)options {
     
     // Add step for the camera instruction
-    ORKHeartRateCameraInstructionStep *instructionStep = [[ORKHeartRateCameraInstructionStep alloc] initWithIdentifier:ORKWorkoutCameraInstructionStepIdentifier];
+    ORKHeartRateCameraInstructionStep *instructionBeforeStep = [[ORKHeartRateCameraInstructionStep alloc] initWithIdentifier:ORKWorkoutBeforeCameraInstructionStepIdentifier];
+    ORKHeartRateCameraInstructionStep *instructionAfterStep = [[ORKHeartRateCameraInstructionStep alloc] initWithIdentifier:ORKWorkoutAfterCameraInstructionStepIdentifier];
     
     // If the rest step is nil then set as a default
     if (!restStep) {
@@ -134,14 +136,15 @@ ORKWorkoutResultIdentifier const ORKWorkoutResultIdentifierDistanceTraveled = @"
     
     // setup the steps
     NSMutableArray *steps = [[NSMutableArray alloc] init];
-    [steps addObject:instructionStep];
     if (motionSteps.count > 0) {
         // Only if there are motion steps should the before step be added
         // This allows a workout step to be created that just measures heart rate
+        [steps addObject:instructionBeforeStep];
         [steps addObject:countBeforeStep];
         [steps addObject:beforeStep];
         [steps addObjectsFromArray:motionSteps];
     }
+    [steps addObject:instructionAfterStep];
     [steps addObject:countAfterStep];
     [steps addObject:restStep];
     
