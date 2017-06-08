@@ -235,9 +235,7 @@
 /* Heart Rate Monitor Step */
 "HEARTRATE_MONITOR_CAMERA_INSTRUCTION_TITLE" = "Use your phone to measure your heart rate";
 "HEARTRATE_MONITOR_CAMERA_INSTRUCTION_TEXT" = "You will need to place your finger over the camera and flash on the back of your phone to capture your heart rate.";
-"HEARTRATE_MONITOR_CAMERA_INSTRUCTION_BUTTON_LEFT" = "Capture";
-"HEARTRATE_MONITOR_CAMERA_INSTRUCTION_BUTTON_RIGHT" = "Heart Rate";
-"HEARTRATE_MONITOR_CAMERA_INSTRUCTION_BUTTON_USE_WATCH" = "Use my Apple Watch";
+"HEARTRATE_MONITOR_CAMERA_INSTRUCTION_BUTTON" = "Capture heart rate";
 "HEARTRATE_MONITOR_CAMERA_STAND_STILL_TITLE" = "Stand still";
 "HEARTRATE_MONITOR_CAMERA_STAND_STILL_WATCH" = "Stand still while your heart rate is measured.";
 "HEARTRATE_MONITOR_CAMERA_INITIAL_TEXT" = "Gently cover the camera and flash on the back of your phone with your finger.";
@@ -246,13 +244,9 @@
 "HEARTRATE_MONITOR_CAMERA_CONTINUE_TEXT" = "Keep your finger still, almost done.";
 "HEARTRATE_MONITOR_DEVICE_TEXT_FORMAT_%@" = "Please wait. Capturing your heart rate from the %@.";
 "HEARTRATE_MONITOR_COMPLETION_CAMERA_BEFORE" = "Great job, your starting heart rate is currently at";
-"HEARTRATE_MONITOR_COMPLETION_DEVICE_BEFORE" = "Great, your starting heart rate is currently at";
 "HEARTRATE_MONITOR_COMPLETION_AFTER" = "Great, your final heart rate is currently at";
 "HEARTRATE_MONITOR_COMPLETION_UNKNOWN" = "Great, your heart rate is currently at";
 "HEARTRATE_MONITOR_DEVICE_APPLE_WATCH" = "Apple Watch";
-"HEARTRATE_MONITOR_DEVICE_NOT_FOUND_TITLE_%@" = "Could not connect to your %@";
-"HEARTRATE_MONITOR_DEVICE_NOT_FOUND_TEXT_%@" = "Please check that you are wearing the device, that it is unlocked, and that you have given this app permission to access your heart rate.";
-"HEARTRATE_MONITOR_DEVICE_NOT_FOUND_TRY_AGAIN_%@" = "Try again to connect to your %@";
 "HEARTRATE_BPM_FORMAT_%@" = "%@ BPM";
 
 /* Task Detail */
@@ -267,14 +261,13 @@
 "CARDIO_INTRO_TITLE" = "Cardio Challenge";
 "CARDIO_INTRO_ABOUT_TEXT" = "In this activity, we will measure how your heart rate changes in response to mild excercise.";
 "CARDIO_HEART_RISK_TITLE" = "Potential heart risk";
-"CARDIO_HEART_RISK_TEXT" = "Do not attempt this test if you have experienced unstable angina or a myocardial infarction (heart attack) during the previous month or need supplemental oxygen to walk.\n\nPlease stop immediately and seek assistance if you experience any of the following: chest pain, difficulty breathing, leg cramps, unstable balance or dizziness, excessive sweating, or a cold, clammy feeling.";
-"CARDIO_SAFETY_TITLE" = "Please note";
-"CARDIO_SAFETY_TEXT" = "Do not attempt this test if you feel that being on your feet for %@ will be a challenge for you. If you are unsure if you can walk for %@ without stopping, please have another person with you that can help if you need it.";
+"CARDIO_HEART_RISK_TEXT" = "Do not attempt this test if you have experienced unstable angina or a myocardial infarction (heart attack) during the previous month or need supplemental oxygen to walk.\n\nDo not attempt this test if you feel that being on your feet for %@ will be a challenge for you. If you are unsure if you can walk for %@ without stopping, please have another person with you that can help if you need it.";
+"CARDIO_HEART_RISK_DETAIL" = "Please stop immediately and seek assistance if you experience any of the following: chest pain, difficulty breathing, leg cramps, unstable balance or dizziness, excessive sweating, or a cold clammy feeling.\n\nWe recommend that you do not attempt this test immediately after a heavy meal, or within 2 hours of vigorous exercise.\n\nIf you need supplemental oxygen to walk you should not participate in this study.";
 "CARDIO_INSTRUCTIONS_1_TITLE" = "Walking Instructions";
 "CARDIO_INSTRUCTIONS_1_TEXT" = "For this test you will need a flat and uncrowded area outdoors where you can walk for %@ at a comfortable pace without interruption. Your goal is to walk as far as you can in %@, but you should not run or jog during this session.";
+"CARDIO_INSTRUCTIONS_1_DETAIL" = "You may walk indoors or outdoors. Please do not walk in crowded areas where you can be interrupted or need to pause your walk (for example, waiting for a light change to cross a busy street). Do not walk on a treadmill.\n\nYou may walk with other people, but please make sure that you are the one setting the speed.\n\nPlease be sure you are wearing comfortable clothing and good shoes for walking. If you normally use a walking aid such as a cane or walker, you should continue to use it. You may stop and rest during the session if you need to.";
 "CARDIO_INSTRUCTIONS_2_TITLE" = "Start by standing still";
-"CARDIO_INSTRUCTIONS_2_TEXT" = "You should have a place to stand and complete a quick health check-in before and after walking to allow your heart rate to come to rest.";
-"CARDIO_INSTRUCTIONS_2_DETAIL" = "If you have an Apple Watch, please make sure that you are wearing it for this activity.";
+"CARDIO_INSTRUCTIONS_2_TEXT" = "You should have a place to stand and complete a quick health check-in before and after walking to allow your heart rate to come to rest.\n\nIf you have an Apple Watch, please make sure that you are wearing it for this activity.";
 "CARDIO_POST_SURVEY_PROMPT" = "What, if anything, kept you from walking farther?";
 "CARDIO_POST_SURVEY_CHOICE_BEST_EFFORT" = "Nothing, was my best effort";
 "CARDIO_POST_SURVEY_CHOICE_FEELING_TIRED" = "Feeling tired";
@@ -535,19 +528,19 @@
 "MOOD_BREATHING_AFTER_EXCERCISE_PROMPT" = "Now, how hard is it for you to breathe?";
 "MOOD_BREATHING_DAILY_PROMPT" = "Today, how hard is it for you to breathe?";
 "MOOD_BREATHING_WEEKLY_PROMPT" = "This week, how hard has it been for you to breathe?";
-"MOOD_BREATHING_GREAT" = "no issues with breathing";
-"MOOD_BREATHING_GOOD" = "mild difficulty in breathing";
-"MOOD_BREATHING_AVERAGE" = "moderate difficulty in breathing";
-"MOOD_BREATHING_BAD" = "severe difficulty in breathing";
-"MOOD_BREATHING_TERRIBLE" = "horrible difficulty in breathing";
+"MOOD_BREATHING_GREAT" = "No issues";
+"MOOD_BREATHING_GOOD" = "Mild";
+"MOOD_BREATHING_AVERAGE" = "Okay";
+"MOOD_BREATHING_BAD" = "Moderate";
+"MOOD_BREATHING_TERRIBLE" = "Horrible";
 "MOOD_TIRED_AFTER_EXCERCISE_PROMPT" = "Now, how tired are you?";
 "MOOD_TIRED_DAILY_PROMPT" = "Today, how tired are you?";
 "MOOD_TIRED_WEEKLY_PROMPT" = "This week, how tired have you been?";
-"MOOD_TIRED_GREAT" = "not tired";
-"MOOD_TIRED_GOOD" = "mildly tired";
-"MOOD_TIRED_AVERAGE" = "moderately tired";
-"MOOD_TIRED_BAD" = "very tired";
-"MOOD_TIRED_TERRIBLE" = "extremely tired";
+"MOOD_TIRED_GREAT" = "Not tired";
+"MOOD_TIRED_GOOD" = "Mild";
+"MOOD_TIRED_AVERAGE" = "Moderate";
+"MOOD_TIRED_BAD" = "Severe";
+"MOOD_TIRED_TERRIBLE" = "Horrible";
 
 /* Tremor test active task. */
 "TREMOR_TEST_TITLE" = "Tremor Activity";

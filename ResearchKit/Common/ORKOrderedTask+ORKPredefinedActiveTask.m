@@ -158,12 +158,16 @@ void ORKStepArrayAddStep(NSMutableArray *array, ORKStep *step) {
 
 #pragma mark - cardioChallengeTask
 
+NSString *const ORKWorkoutHeartRiskStepIdentifier = @"heartRisk";
+NSString *const ORKWorkoutInstruction1StepIdentifier = @"workoutInstruction1";
+NSString *const ORKWorkoutInstruction2StepIdentifier = @"workoutInstruction2";
+NSString *const ORKWorkoutWalkInstructionStepIdentifier = @"walkInstruction";
 NSString *const ORKWorkoutStepIdentifier = @"workout";
-NSString *const ORKWorkoutPostActivitySurveyQuestionStepIdentifier = @"survey.after";
-NSString *const ORKWorkoutBreathingBeforeQuestionStepIdentifier = @"breathing.before";
-NSString *const ORKWorkoutBreathingAfterQuestionStepIdentifier = @"breathing.after";
-NSString *const ORKWorkoutTiredBeforeQuestionStepIdentifier = @"tired.before";
-NSString *const ORKWorkoutTiredAfterQuestionStepIdentifier = @"tired.after";
+NSString *const ORKWorkoutPostActivitySurveyQuestionStepIdentifier = @"surveyAfter";
+NSString *const ORKWorkoutBreathingBeforeQuestionStepIdentifier = @"breathingBefore";
+NSString *const ORKWorkoutBreathingAfterQuestionStepIdentifier = @"breathingAfter";
+NSString *const ORKWorkoutTiredBeforeQuestionStepIdentifier = @"tiredBefore";
+NSString *const ORKWorkoutTiredAfterQuestionStepIdentifier = @"tiredAfter";
 
 + (ORKOrderedTask *)cardioChallengeTaskWithIdentifier:(NSString *)identifier
                                intendedUseDescription:(nullable NSString *)intendedUseDescription
@@ -189,34 +193,27 @@ NSString *const ORKWorkoutTiredAfterQuestionStepIdentifier = @"tired.after";
         }
         
         {
-            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction1StepIdentifier];
+            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKWorkoutHeartRiskStepIdentifier];
             step.title = ORKLocalizedString(@"CARDIO_HEART_RISK_TITLE", nil);
-            step.text = ORKLocalizedString(@"CARDIO_HEART_RISK_TEXT", nil);
+            step.text = [NSString localizedStringWithFormat:ORKLocalizedString(@"CARDIO_HEART_RISK_TEXT", nil), durationString, durationString];
+            step.detailText = ORKLocalizedString(@"CARDIO_HEART_RISK_DETAIL", nil);
             
             ORKStepArrayAddStep(steps, step);
         }
         
         {
-            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction2StepIdentifier];
-            step.title = ORKLocalizedString(@"CARDIO_SAFETY_TITLE", nil);
-            step.text = [NSString localizedStringWithFormat:ORKLocalizedString(@"CARDIO_SAFETY_TEXT", nil), durationString, durationString];
-            
-            ORKStepArrayAddStep(steps, step);
-        }
-        
-        {
-            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction3StepIdentifier];
+            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKWorkoutInstruction1StepIdentifier];
             step.title = ORKLocalizedString(@"CARDIO_INSTRUCTIONS_1_TITLE", nil);
             step.text = [NSString localizedStringWithFormat:ORKLocalizedString(@"CARDIO_INSTRUCTIONS_1_TEXT", nil), durationString, durationString];
+            step.detailText = ORKLocalizedString(@"CARDIO_INSTRUCTIONS_1_DETAIL", nil);
             
             ORKStepArrayAddStep(steps, step);
         }
         
         {
-            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction4StepIdentifier];
+            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKWorkoutInstruction2StepIdentifier];
             step.title = ORKLocalizedString(@"CARDIO_INSTRUCTIONS_2_TITLE", nil);
             step.text = ORKLocalizedString(@"CARDIO_INSTRUCTIONS_2_TEXT", nil);
-            step.detailText = ORKLocalizedString(@"CARDIO_INSTRUCTIONS_2_DETAIL", nil);
             
             ORKStepArrayAddStep(steps, step);
         }
@@ -247,7 +244,7 @@ NSString *const ORKWorkoutTiredAfterQuestionStepIdentifier = @"tired.after";
     }
     
     {
-        ORKInstructionStep *pocketStep = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction1StepIdentifier];
+        ORKInstructionStep *pocketStep = [[ORKInstructionStep alloc] initWithIdentifier:ORKWorkoutWalkInstructionStepIdentifier];
         pocketStep.title = ORKLocalizedString(@"CARDIO_WALK_INSTRUCTION_TITLE", nil);
         pocketStep.text = ORKLocalizedString(@"CARDIO_WALK_INSTRUCTION_TEXT", nil);
         pocketStep.image = [UIImage imageNamed:@"pocket" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
