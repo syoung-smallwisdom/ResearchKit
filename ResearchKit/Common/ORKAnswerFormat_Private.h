@@ -31,6 +31,7 @@
 
 #import <ResearchKit/ORKAnswerFormat.h>
 
+@class ORKQuestionResult;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -39,10 +40,17 @@ ORK_EXTERN id ORKNullAnswerValue() ORK_AVAILABLE_DECL;
 
 @interface ORKAnswerFormat ()
 
+- (BOOL)isAnswerValid:(id)answer;
 - (BOOL)isAnswerValidWithString:(nullable NSString *)text;
+- (ORKQuestionResult *)resultWithIdentifier:(NSString *)identifier answer:(id)answer;
 
 @end
 
+@interface ORKNumericAnswerFormat ()
+
+- (nullable NSString *)sanitizedTextFieldText:(nullable NSString *)text decimalSeparator:(nullable NSString *)separator;
+
+@end
 
 /**
  The `ORKConfirmTextAnswerFormat` class represents the answer format for questions that collect a text
