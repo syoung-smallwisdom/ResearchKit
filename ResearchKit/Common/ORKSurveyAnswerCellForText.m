@@ -49,7 +49,7 @@
     NSInteger _maxLength;
 }
 
-- (void) setText:(NSString*)text {
+- (void)setText:(NSString *)text {
     self.textView.text = text;
     [self textDidChange];
 }

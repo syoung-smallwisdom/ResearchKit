@@ -39,9 +39,9 @@ ORK_CLASS_AVAILABLE
 @interface ORKSurveyAnswerCellForText : ORKSurveyAnswerCell <UITextViewDelegate>
 
 /**
- * Allow exxternal classes to set textview's text for answer cell
+ * Allow external classes to set textview's text for answer cell
  */
-- (void) setText:(nullable NSString*)text;
+- (void)setText:(NSString *)text;
 
 @end
 

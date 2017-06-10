@@ -88,7 +88,7 @@ ORK_CLASS_AVAILABLE
 /**
  * @param the answer to store
  */
-- (void)setAnswer:(id<NSCopying,NSObject,NSCoding>)answer;
+- (void)setAnswer:(id<NSCopying, NSCoding, NSObject>)answer;
 
 @end
 
