@@ -82,7 +82,8 @@ ORK_EXTERN ORKWorkoutResultIdentifier const ORKWorkoutResultIdentifierDistanceTr
 
 ORK_EXTERN NSString *const ORKWorkoutBeforeStepIdentifier ORK_AVAILABLE_DECL;
 ORK_EXTERN NSString *const ORKWorkoutAfterStepIdentifier ORK_AVAILABLE_DECL;
-ORK_EXTERN NSString *const ORKWorkoutCameraInstructionStepIdentifier ORK_AVAILABLE_DECL;
+ORK_EXTERN NSString *const ORKWorkoutBeforeCameraInstructionStepIdentifier ORK_AVAILABLE_DECL;
+ORK_EXTERN NSString *const ORKWorkoutAfterCameraInstructionStepIdentifier ORK_AVAILABLE_DECL;
 ORK_EXTERN NSString *const ORKWorkoutBeforeCountdownStepIdentifier ORK_AVAILABLE_DECL;
 ORK_EXTERN NSString *const ORKWorkoutAfterCountdownStepIdentifier ORK_AVAILABLE_DECL;
 
