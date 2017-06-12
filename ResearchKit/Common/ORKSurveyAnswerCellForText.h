@@ -31,15 +31,21 @@
 
 @import UIKit;
 #import "ORKSurveyAnswerCell.h"
-
+#import "ORKAnswerTextView.h"
+#import <ResearchKit/ORKTypes.h>
 
 NS_ASSUME_NONNULL_BEGIN
+ORK_CLASS_AVAILABLE
+@interface ORKSurveyAnswerCellForText : ORKSurveyAnswerCell <UITextViewDelegate>
 
-@interface ORKSurveyAnswerCellForText : ORKSurveyAnswerCell
+/**
+ * Allow external classes to set textview's text for answer cell
+ */
+- (void)setText:(NSString *)text;
 
 @end
 
-
+ORK_CLASS_AVAILABLE
 @interface ORKSurveyAnswerCellForTextField : ORKSurveyAnswerCell <UITextFieldDelegate>
 
 @end

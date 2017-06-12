@@ -613,6 +613,18 @@
     return YES;
 }
 
+- (BOOL)isFormItemValidFor:(NSString*)formItemIdentifier {
+    for (ORKFormItem *item in [self formItems]) {
+        if ([item.identifier isEqualToString:formItemIdentifier]) {
+            id answer = _savedAnswers[item.identifier];
+            if (ORKIsAnswerEmpty(answer) == NO && ![item.impliedAnswerFormat isAnswerValid:answer]) {
+                return NO;
+            }
+        }
+    }
+    return YES;
+}
+
 - (BOOL)allNonOptionalFormItemsHaveAnswers {
     for (ORKFormItem *item in [self formItems]) {
         if (!item.optional) {

@@ -34,12 +34,14 @@
 #import "ORKHelpers_Internal.h"
 #import "ORKSkin.h"
 
-
 @interface ORKSurveyAnswerCell ()
+
+- (nullable UITextView *)textView;
 
 // Handle keyboard
 @property (nonatomic) UIEdgeInsets cachedContentInsets;
 @property (nonatomic) UIEdgeInsets cachedScrollIndicatorInsets;
+
 
 @end
 

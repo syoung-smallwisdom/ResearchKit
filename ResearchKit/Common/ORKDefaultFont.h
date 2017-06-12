@@ -28,9 +28,10 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <ResearchKit/ORKTypes.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+ORK_CLASS_AVAILABLE
 @protocol ORKDefaultFont <NSObject>
 
 + (UIFont *)defaultFont;

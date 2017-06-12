@@ -48,6 +48,26 @@ NS_ASSUME_NONNULL_BEGIN
 ORK_CLASS_AVAILABLE
 @interface ORKFormStepViewController : ORKStepViewController
 
+/**
+ * Expose method for custom UI functionality
+ */
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ * Allow subclasses to check or override continue button enabled functionality
+ */
+- (BOOL)continueButtonEnabled;
+
+/**
+ * Expose validity alert message to allow for custom alert messaging
+ */
+- (void)showValidityAlertWithMessage:(NSString *)text;
+
+/**
+ * Check a specific form item answer for validity
+ */
+- (BOOL)isFormItemValidFor:(NSString*)formItemIdentifier;
+
 @end
 
 NS_ASSUME_NONNULL_END

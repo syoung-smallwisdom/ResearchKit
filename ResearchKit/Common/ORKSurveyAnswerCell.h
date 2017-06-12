@@ -31,13 +31,14 @@
 
 @import UIKit;
 #import "ORKTableViewCell.h"
-
+#import <ResearchKit/ORKTypes.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class ORKQuestionStep;
 @class ORKSurveyAnswerCell;
 
+ORK_CLASS_AVAILABLE
 @protocol ORKSurveyAnswerCellDelegate
 
 @required
@@ -47,11 +48,34 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
+ORK_CLASS_AVAILABLE
 @interface ORKSurveyAnswerCell : ORKTableViewCell {
 @protected
     id _answer;
 }
+
+/**
+ * This method should only be used by sub-classes, as it internally sets the answer
+ * that must align with the expected answer type
+ * It also triggers a call to the answerDidChangeTo delegate method
+ */
+- (void)ork_setAnswer:(id)answer;
+
+/**
+ * Expose validity alert message to allow for custom alert messaging
+ */
+
+- (void)showValidityAlertWithMessage:(NSString *)text;
+
+/**
+ * Expose validity alert message to allow for custom alert messaging
+ */
+- (void)showValidityAlertWithTitle:(NSString *)title message:(NSString *)message;
+
+/*
+ * This method is used to force the SurveyAnswerCell to reassess it's answer value
+ */
+- (void)answerDidChange;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier
@@ -70,29 +94,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
 @interface ORKSurveyAnswerCell (ORKSurveyAnswerCellInternal)
 
 - (void)prepareView;
-
-- (nullable UITextView *)textView;
 
 + (CGFloat)suggestedCellHeightForView:(UIView *)view;
 
 - (NSArray *)suggestedCellHeightConstraintsForView:(UIView *)view;
 
-- (void)ork_setAnswer:(nullable id)answer;
-- (void)answerDidChange;
-
 + (BOOL)shouldDisplayWithSeparators;
 
-- (void)showValidityAlertWithMessage:(nullable NSString *)text;
-
-- (void)showValidityAlertWithTitle:(NSString *)title message:(NSString *)message;
-
-// Get full width layout for some subclass cells 
+// Get full width layout for some subclass cells
 + (NSLayoutConstraint *)fullWidthLayoutConstraint:(UIView *)view;
 
 @end
+
 
 NS_ASSUME_NONNULL_END

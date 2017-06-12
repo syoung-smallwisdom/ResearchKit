@@ -33,6 +33,7 @@
 #import <ResearchKit/ORKDefines.h>
 #import <ResearchKit/ORKStepViewController.h>
 
+@class ORKSurveyAnswerCell;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -52,7 +53,42 @@ NS_ASSUME_NONNULL_BEGIN
  */
 
 ORK_CLASS_AVAILABLE
-@interface ORKQuestionStepViewController : ORKStepViewController
+@interface ORKQuestionStepViewController : ORKStepViewController <UITableViewDelegate, UITableViewDataSource>
+
+/**
+ * Allow access to answer cells contained within this view controller's tableview
+ */
+- (ORKSurveyAnswerCell *)answerCellForTableView:(UITableView *)tableView;
+
+/**
+ * @return YES if skip button is enabled, NO otherwise
+ */
+- (BOOL)skipButtonEnabled;
+
+/**
+ * Skip the current question and move forward
+ */
+- (void)skipForward;
+
+/**
+ * Allow subclasses to check or override continue button enabled functionality
+ */
+- (BOOL)continueButtonEnabled;
+
+/**
+ * @return YES if answer exists, NO if one does not exist yet and is nil
+ */
+- (BOOL)hasNonNilAnswer;
+
+/**
+ * @return the current answer stored, can be nil
+ */
+- (id<NSCopying, NSCoding, NSObject>)answer;
+
+/**
+ * @param the answer to store
+ */
+- (void)setAnswer:(id<NSCopying, NSCoding, NSObject>)answer;
 
 @end
 
