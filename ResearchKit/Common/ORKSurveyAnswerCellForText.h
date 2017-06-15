@@ -41,7 +41,7 @@ ORK_CLASS_AVAILABLE
 /**
  * Allow external classes to set textview's text for answer cell
  */
-- (void)setText:(NSString *)text;
+- (void)setText:(nullable NSString *)text;
 
 @end
 
