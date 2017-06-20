@@ -379,6 +379,11 @@ ORK_CLASS_AVAILABLE
 - (void)skipForward;
 
 /**
+ Indicates whether or not the navigation should be animated. default = `YES`
+ */
+- (BOOL)shouldAnimateNavigation;
+
+/**
  A Boolean value indicating whether the view controller has been presented before.
  */
 @property (nonatomic, readonly) BOOL hasBeenPresented;

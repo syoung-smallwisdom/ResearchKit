@@ -382,6 +382,9 @@ static Class __customContinueButtonClass;
     [self goForward];
 }
 
+- (BOOL)shouldAnimateNavigation {
+    return YES;
+}
 
 - (ORKTaskViewController *)taskViewController {
     // look to parent view controller for a task view controller

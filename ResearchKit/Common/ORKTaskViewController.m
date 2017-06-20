@@ -1270,7 +1270,7 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
         if (fromController.isBeingReviewed) {
             [_managedStepIdentifiers removeLastObject];
         }
-        [self showViewController:stepViewController goForward:YES animated:YES];
+        [self showViewController:stepViewController goForward:YES animated:[fromController shouldAnimateNavigation]];
     }
     
 }
@@ -1296,7 +1296,7 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
             assert([itemId isEqualToString:_managedStepIdentifiers.lastObject]);
             [_managedStepIdentifiers removeLastObject];
             
-            [self showViewController:stepViewController goForward:NO animated:YES];
+            [self showViewController:stepViewController goForward:NO animated:[fromController shouldAnimateNavigation]];
         }
     }
 }
