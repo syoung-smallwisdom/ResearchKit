@@ -1142,7 +1142,7 @@ NSString *const ORKShortWalkRestStepIdentifier = @"walking.rest";
             walkingStep.shouldVibrateOnFinish = YES;
             walkingStep.shouldPlaySoundOnFinish = YES;
             walkingStep.finishedSpokenInstruction = (restDuration > 0) ?
-                ORKLocalizedString(@"WALK_BACK_AND_FORTH_STOP_SPOKEN", nil)
+                ORKLocalizedString(@"WALK_BACK_AND_FORTH_STOP_SPOKEN", nil) :
                 ORKLocalizedString(@"WALK_BACK_AND_FORTH_FINISHED_VOICE", nil);
             
             ORKStepArrayAddStep(steps, walkingStep);
