@@ -39,7 +39,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT NSString *const ORKInstruction0StepIdentifier;
 FOUNDATION_EXPORT NSString *const ORKInstruction1StepIdentifier;
+FOUNDATION_EXPORT NSString *const ORKInstruction2StepIdentifier;
 FOUNDATION_EXPORT NSString *const ORKCountdownStepIdentifier;
+FOUNDATION_EXPORT NSString *const ORKCountdown1StepIdentifier;
 FOUNDATION_EXPORT NSString *const ORKAudioStepIdentifier;
 FOUNDATION_EXPORT NSString *const ORKAudioTooLoudStepIdentifier;
 FOUNDATION_EXPORT NSString *const ORKTappingStepIdentifier;
