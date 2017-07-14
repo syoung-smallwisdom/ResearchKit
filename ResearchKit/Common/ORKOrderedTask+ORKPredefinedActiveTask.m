@@ -1094,7 +1094,7 @@ NSString *const ORKShortWalkRestStepIdentifier = @"walking.rest";
         }
         
         {
-            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction1StepIdentifier];
+            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction2StepIdentifier];
             step.title = ORKLocalizedString(@"WALK_INTRO_3_TITLE", nil);
             step.text = ORKLocalizedString(@"WALK_INTRO_3_TEXT_BACK_AND_FORTH_INSTRUCTION", nil);
             step.image = [UIImage imageNamed:@"pocket" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
