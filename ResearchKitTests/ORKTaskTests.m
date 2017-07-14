@@ -1474,8 +1474,10 @@ static ORKStepResult *(^getConsentStepResult)(NSString *, NSString *, BOOL) = ^O
     // could adversely impact existing studies that are expecting this step order.
     NSArray *expectedStepIdentifiers = @[ORKInstruction0StepIdentifier,
                                          ORKInstruction1StepIdentifier,
+                                         ORKInstruction2StepIdentifier,
                                          ORKCountdownStepIdentifier,
                                          ORKShortWalkOutboundStepIdentifier,
+                                         ORKCountdown1StepIdentifier,
                                          ORKShortWalkRestStepIdentifier,
                                          ORKConclusionStepIdentifier];
     XCTAssertEqual(task.steps.count, expectedStepIdentifiers.count);
@@ -1499,6 +1501,7 @@ static ORKStepResult *(^getConsentStepResult)(NSString *, NSString *, BOOL) = ^O
     // could adversely impact existing studies that are expecting this step order.
     NSArray *expectedStepIdentifiers = @[ORKInstruction0StepIdentifier,
                                          ORKInstruction1StepIdentifier,
+                                         ORKInstruction2StepIdentifier,
                                          ORKCountdownStepIdentifier,
                                          ORKShortWalkOutboundStepIdentifier,
                                          ORKConclusionStepIdentifier];

@@ -1151,7 +1151,7 @@ NSString *const ORKShortWalkRestStepIdentifier = @"walking.rest";
         if (restDuration > 0) {
             
             {
-                ORKCountdownStep *step = [[ORKCountdownStep alloc] initWithIdentifier:ORKCountdown2StepIdentifier];
+                ORKCountdownStep *step = [[ORKCountdownStep alloc] initWithIdentifier:ORKCountdown1StepIdentifier];
                 step.title = ORKLocalizedString(@"WALK_COUNTDOWN_2_TITLE", nil);
                 step.stepDuration = 5.0;
                 
