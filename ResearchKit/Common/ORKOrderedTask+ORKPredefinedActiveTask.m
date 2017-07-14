@@ -1088,9 +1088,15 @@ NSString *const ORKShortWalkRestStepIdentifier = @"walking.rest";
         
         {
             ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction1StepIdentifier];
-            step.title = ORKLocalizedString(@"WALK_TASK_TITLE", nil);
+            step.title = ORKLocalizedString(@"WALK_INTRO_2_TITLE", nil);
             step.text = ORKLocalizedString(@"WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION", nil);
-            step.detailText = ORKLocalizedString(@"WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION", nil);
+            ORKStepArrayAddStep(steps, step);
+        }
+        
+        {
+            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction1StepIdentifier];
+            step.title = ORKLocalizedString(@"WALK_INTRO_3_TITLE", nil);
+            step.text = ORKLocalizedString(@"WALK_INTRO_3_TEXT_BACK_AND_FORTH_INSTRUCTION", nil);
             step.image = [UIImage imageNamed:@"pocket" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
             step.shouldTintImages = YES;
             ORKStepArrayAddStep(steps, step);
@@ -1099,6 +1105,7 @@ NSString *const ORKShortWalkRestStepIdentifier = @"walking.rest";
     
     {
         ORKCountdownStep *step = [[ORKCountdownStep alloc] initWithIdentifier:ORKCountdownStepIdentifier];
+        step.title = ORKLocalizedString(@"WALK_COUNTDOWN_1_TITLE", nil);
         step.stepDuration = 5.0;
         
         ORKStepArrayAddStep(steps, step);
@@ -1132,11 +1139,25 @@ NSString *const ORKShortWalkRestStepIdentifier = @"walking.rest";
             walkingStep.shouldVibrateOnStart = YES;
             walkingStep.shouldPlaySoundOnStart = YES;
             walkingStep.shouldSpeakRemainingTimeAtHalfway = (walkDuration > 20);
+            walkingStep.shouldVibrateOnFinish = YES;
+            walkingStep.shouldPlaySoundOnFinish = YES;
+            walkingStep.finishedSpokenInstruction = (restDuration > 0) ?
+                ORKLocalizedString(@"WALK_BACK_AND_FORTH_STOP_SPOKEN", nil)
+                ORKLocalizedString(@"WALK_BACK_AND_FORTH_FINISHED_VOICE", nil);
             
             ORKStepArrayAddStep(steps, walkingStep);
         }
         
         if (restDuration > 0) {
+            
+            {
+                ORKCountdownStep *step = [[ORKCountdownStep alloc] initWithIdentifier:ORKCountdown2StepIdentifier];
+                step.title = ORKLocalizedString(@"WALK_COUNTDOWN_2_TITLE", nil);
+                step.stepDuration = 5.0;
+                
+                ORKStepArrayAddStep(steps, step);
+            }
+            
             NSMutableArray *recorderConfigurations = [NSMutableArray array];
             if (!(ORKPredefinedTaskOptionExcludeAccelerometer & options)) {
                 [recorderConfigurations addObject:[[ORKAccelerometerRecorderConfiguration alloc] initWithIdentifier:ORKAccelerometerRecorderIdentifier

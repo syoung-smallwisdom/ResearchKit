@@ -300,7 +300,7 @@
 "FITNESS_INTRO_2_STAND_TEXT_FORMAT" = "Walk outdoors at your fastest possible pace for %1$@. When you're done, stand still and rest comfortably for %2$@. To begin, tap Get Started.";
 
 /* Short walk active task. */
-"WALK_TASK_TITLE" = "Gait and Balance";
+"WALK_TASK_TITLE" = "Walk and Balance";
 "WALK_INTRO_TEXT" = "This activity measures your gait and balance as you walk and stand still. Do not continue if you cannot safely walk unassisted.";
 "WALK_INTRO_2_TEXT_%ld" = "Find a place where you can safely walk unassisted for about %ld steps in a straight line.";
 "WALK_INTRO_2_DETAIL" = "Put your phone in a pocket or bag and follow the audio instructions.";
@@ -310,10 +310,15 @@
 "WALK_OUTBOUND_INSTRUCTION_FORMAT" = "Walk up to %ld steps in a straight line.";
 
 /* Short walk back and forth. */
-"WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION" = "Find a place where you can safely walk back and forth in a straight line. Try to walk continuously by turning at the ends of your path, as if you are walking around a cone.\n\nNext you will be instructed to turn around in a full circle, then stand still with your arms at your sides and your feet about shoulder-width apart.";
-"WALK_INTRO_2_DETAIL_BACK_AND_FORTH_INSTRUCTION" = "Tap Get Started when you are ready to begin.\nThen place your phone in a pocket or bag and follow the audio instructions.";
-"WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT" = "Walk back and forth in a straight line for %@. Walk as you would normally.";
-"WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT" = "Turn in a full circle and then stand still for %@.";
+"WALK_INTRO_2_TITLE" = "Walk and Balance instructions";
+"WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION" = "First, walk back and forth for %1$@ seconds at your normal pace.\n\nYou will then be asked to turn around in a full circle and then stand still, with your feet about shoulder-width apart. Stand still for %2$@ seconds.";
+"WALK_INTRO_3_TITLE" = "Please walk with your phone";
+"WALK_INTRO_3_TEXT_BACK_AND_FORTH_INSTRUCTION" = "When you are ready, tap the walk button and put the phone in a pocket or hold in your hand while you walk. The phone will count down from 5 to begin your session.";
+"WALK_COUNTDOWN_1_TITLE" = "Start walking in:";
+"WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT" = "Walk back and forth for %@. Walk as you would normally.";
+"WALK_BACK_AND_FORTH_STOP_SPOKEN" = "Stop walking and stand still.";
+"WALK_COUNTDOWN_2_TITLE" = "Start turning around in a full circle in:";
+"WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT" = "Spin around in one complete circle and then stand still for %@.";
 "WALK_BACK_AND_FORTH_FINISHED_VOICE" = "You have completed the activity.";
 
 /* Tapping active task. */
@@ -568,8 +573,8 @@
 "TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INTRO_RIGHT" = "Now hold your phone with your RIGHT hand at shoulder height with your elbow bent.";
 "TREMOR_TEST_ACTIVE_STEP_BEND_ARM_INSTRUCTION_%ld" = "Keep holding your phone with your elbow bent for %ld seconds";
 "TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO" = "Now keeping your elbow bent, touch your phone to your nose repeatedly.";
-"TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT" = "Now keeping your elbow bent with your phone in your LEFT hand, touch your phone to your nose repeatedly.";
-"TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT" = "Now keeping your elbow bent with your phone in your RIGHT hand, touch your phone to your nose repeatedly.";
+"TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_LEFT" = "Now keeping your elbow bent with your phone in your LEFT hand. You will be asked to touch your phone to your nose repeatedly once you tap the start button.";
+"TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INTRO_RIGHT" = "Now keeping your elbow bent with your phone in your RIGHT hand. You will be asked to touch your phone to your nose repeatedly once you tap the start button.";
 "TREMOR_TEST_ACTIVE_STEP_TOUCH_NOSE_INSTRUCTION_%ld" = "Keep touching your phone to your nose for %ld seconds";
 "TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO" = "Prepare to do a queen wave (wave by turning your wrist).";
 "TREMOR_TEST_ACTIVE_STEP_TURN_WRIST_INTRO_LEFT" = "Prepare to do a queen wave with your phone in your LEFT hand (wave by turning your wrist).";
