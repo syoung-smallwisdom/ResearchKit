@@ -44,8 +44,6 @@ NS_ASSUME_NONNULL_BEGIN
 // Whether to allow navigation back from this step.
 @property (nonatomic, assign, readonly) BOOL allowsBackNavigation;
 
-@property (nonatomic, assign) BOOL useSurveyMode;
-
 @end
 
 NS_ASSUME_NONNULL_END
