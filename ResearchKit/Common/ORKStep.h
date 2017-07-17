@@ -237,6 +237,11 @@ ORK_CLASS_AVAILABLE
  */
 - (BOOL)isInstructionStep;
 
+/**
+ The "next" button is hidden and the step automatically forwards on selection if this is true.
+ */
+@property (nonatomic, assign) BOOL useSurveyMode;
+
 @end
 
 NS_ASSUME_NONNULL_END
