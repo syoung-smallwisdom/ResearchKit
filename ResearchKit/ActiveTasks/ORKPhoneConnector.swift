@@ -74,14 +74,14 @@ public final class ORKPhoneConnector: NSObject, WCSessionDelegate {
      */
     public func send(message: ORKWorkoutMessage) {
         
-        debug_print("CALLED: send(message: \(message))")
+        debugPrint("CALLED: send(message: \(message))")
         
         let replyHandler:(([String : Any]) -> Swift.Void)? = { (reply) in
-            debug_print("message sent: \(message) reply: \(reply)")
+            debugPrint("message sent: \(message) reply: \(reply)")
         }
         
         let errHandler: ((Error) -> Swift.Void)? = { (error) in
-            debug_print("Failed to send message: \(message) error: \(error)")
+            debugPrint("Failed to send message: \(message) error: \(error)")
         }
         
         let messageHandler = MessageHandler(message: message, replyHandler: replyHandler, errorHandler: errHandler)
@@ -96,7 +96,7 @@ public final class ORKPhoneConnector: NSObject, WCSessionDelegate {
         
         if let session = self.connectivitySession, session.activationState == .activated, session.isReachable {
             // Connection established. Send all pending messages.
-            debug_print("Connection established. Sending pending messages.")
+            debugPrint("Connection established. Sending pending messages.")
             for message in self.messagesToSend {
                 session.sendMessage(message.message.dictionaryRepresentation(),
                                     replyHandler: message.replyHandler, errorHandler: message.errorHandler)
@@ -106,7 +106,7 @@ public final class ORKPhoneConnector: NSObject, WCSessionDelegate {
         } else if !connecting &&
             ((self.connectivitySession == nil) || (self.connectivitySession!.activationState == .notActivated)) {
             // Session activation has not been attempted or disconect is finished
-            debug_print("Attempting connection.")
+            debugPrint("Attempting connection.")
             connecting = true
             let session = WCSession.default()
             session.delegate = self
@@ -114,7 +114,7 @@ public final class ORKPhoneConnector: NSObject, WCSessionDelegate {
             
         } else {
             // If the message got here while a connection is being established, then retry with w/ delay
-            debug_print("Connection activated. Waiting for change in reachability.")
+            debugPrint("Connection activated. Waiting for change in reachability.")
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
                 self.sendPending()
             })
@@ -154,7 +154,7 @@ public final class ORKPhoneConnector: NSObject, WCSessionDelegate {
     }
     
     public func sessionReachabilityDidChange(_ session: WCSession) {
-        debug_print("Watch connector \(session): sessionReachabilityDidChange")
+        debugPrint("Watch connector \(session): sessionReachabilityDidChange")
     }
     
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {

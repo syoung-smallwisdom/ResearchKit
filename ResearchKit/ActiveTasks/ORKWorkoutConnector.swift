@@ -276,7 +276,7 @@ open class ORKWorkoutConnector: NSObject, HKWorkoutSessionDelegate {
     public func stopWorkout() {
         guard let session = _workoutSession, session.state != .ended else { return }
         
-        debug_print("CALLED: stopWorkout()")
+        debugPrint("CALLED: stopWorkout()")
         _workoutState = .stopping
         
         // End the Workout Session
@@ -286,7 +286,7 @@ open class ORKWorkoutConnector: NSObject, HKWorkoutSessionDelegate {
     
     private func createAndSaveWorkout(_ session: HKWorkoutSession) {
         
-        debug_print("CALLED: createAndSaveWorkout(\(session))")
+        debugPrint("CALLED: createAndSaveWorkout(\(session))")
 
         _workoutState = .ended
         
@@ -318,7 +318,7 @@ open class ORKWorkoutConnector: NSObject, HKWorkoutSessionDelegate {
     
     private func sendFinishedMessage(with workout: HKWorkout) {
         
-        debug_print("CALLED: sendFinishedMessage(workout: \(workout))")
+        debugPrint("CALLED: sendFinishedMessage(workout: \(workout))")
         
         _workoutState = .notStarted
         ORKPhoneConnector.shared.workoutConnector = nil
