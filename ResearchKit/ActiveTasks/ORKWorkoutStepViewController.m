@@ -107,6 +107,9 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
     dispatch_async(dispatch_get_main_queue(), ^{
         [self startRecorders];
     });
+    
+    // While running the test, do not allow the application to go to sleep
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -114,6 +117,9 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
     
     // Always stop the recorders and watch
     [self stopRecorders];
+    
+    // Re-enable idle timer
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
 }
 
 - (void)stepViewControllerWillAppear:(ORKStepViewController *)stepViewController {
