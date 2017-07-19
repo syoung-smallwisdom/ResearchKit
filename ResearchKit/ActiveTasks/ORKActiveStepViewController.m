@@ -49,6 +49,7 @@
 #import "ORKActiveStep_Internal.h"
 #import "ORKCollectionResult_Private.h"
 #import "ORKResult.h"
+#import "ORKOrderedTask_Private.h"
 #import "ORKTask.h"
 #import "ORKWorkoutStep_Private.h"
 
@@ -487,7 +488,11 @@ NSString * const ORKConsolidatedRecorderId = @"recorder_data";
     BOOL isHalfway = !_hasSpokenHalfwayCountdown && timer.runtime > timer.duration / 2.0;
     if (!finished && self.activeStep.shouldSpeakRemainingTimeAtHalfway && !UIAccessibilityIsVoiceOverRunning() && isHalfway) {
         _hasSpokenHalfwayCountdown = YES;
-        NSString *text = [NSString localizedStringWithFormat:ORKLocalizedString(@"COUNTDOWN_SPOKEN_REMAINING_%@", nil), @(countDownValue)];
+        
+        NSDateComponentsFormatter *formatter = [ORKOrderedTask textTimeFormatter];
+        NSString *durationString = [formatter stringFromTimeInterval:countDownValue];
+        
+        NSString *text = [NSString localizedStringWithFormat:ORKLocalizedString(@"COUNTDOWN_SPOKEN_REMAINING_%@", nil), durationString];
         [voice speakText:text];
     }
 }

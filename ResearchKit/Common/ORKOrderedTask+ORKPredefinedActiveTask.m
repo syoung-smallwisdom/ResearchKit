@@ -266,8 +266,13 @@ NSString *const ORKWorkoutTiredAfterQuestionStepIdentifier = @"tiredAfter";
         fitnessStep.shouldVibrateOnStart = YES;
         fitnessStep.shouldPlaySoundOnStart = YES;
         fitnessStep.watchInstruction = ORKLocalizedString(@"FITNESS_WALK_INSTRUCTION_WATCH", nil);
+        fitnessStep.shouldSpeakRemainingTimeAtHalfway = YES;
         fitnessStep.beginCommand = ORKWorkoutCommandStartMoving;
         fitnessStep.shouldConsolidateRecorders = YES;
+        fitnessStep.endCommand = ORKWorkoutCommandStopMoving;
+        fitnessStep.shouldVibrateOnFinish = YES;
+        fitnessStep.shouldPlaySoundOnFinish = YES;
+        fitnessStep.finishedSpokenInstruction = ORKLocalizedString(@"FITNESS_WALK_INSTRUCTION_END", nil);
         
         ORKHeartRateCaptureStep *restStep = [[ORKHeartRateCaptureStep alloc] initWithIdentifier:ORKWorkoutAfterStepIdentifier];
         restStep.stepDuration = restDuration;

@@ -55,6 +55,7 @@
     ORKFitnessContentView *_contentView;
     NSNumberFormatter *_hrFormatter;
     BOOL _userEndedWorkout;
+    id <NSObject> _rotationObserver;
 }
 
 - (instancetype)initWithStep:(ORKStep *)step {    
@@ -115,6 +116,30 @@
     _contentView.timeLeft = self.fitnessStep.stepDuration;
     self.activeStepView.activeCustomView = _contentView;
     self.activeStepView.stepViewFillsAvailableSpace = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // Disable user interaction if the device is upside-down b/c then it is suppose to be in a pocket and
+    // we don't want users to accidentally butt cancel.
+    _rotationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceOrientationDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        BOOL enabled = ([UIDevice currentDevice].orientation != UIDeviceOrientationPortraitUpsideDown);
+        self.view.window.userInteractionEnabled = enabled;
+        self.view.window.alpha = enabled ? 1.0 : 0.0;
+    }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    // Re-enable the window and clear the rotation observer
+    if (_rotationObserver) {
+        [[NSNotificationCenter defaultCenter] removeObserver:_rotationObserver];
+        _rotationObserver = nil;
+    }
+    self.view.window.userInteractionEnabled = YES;
+    self.view.window.alpha = 1.0;
 }
 
 - (void)updateHeartRateWithQuantity:(HKQuantitySample *)quantity unit:(HKUnit *)unit {
