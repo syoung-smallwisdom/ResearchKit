@@ -132,7 +132,7 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
     [_watchRecorder.logger append:json error:nil];
     
     // Reset the location recorder
-    if ([stepViewController.step isKindOfClass:[ORKFitnessStep class]]) {
+    if ([stepViewController.step isKindOfClass:[ORKFitnessStep class]] && (_locationRecorder != nil)) {
         BOOL standingStill = ((ORKFitnessStep *)stepViewController.step).isStandingStill;
         ORKLocationRecorderConfiguration *config = (ORKLocationRecorderConfiguration *)_locationRecorder.configuration;
         if (config.standingStill != standingStill) {
