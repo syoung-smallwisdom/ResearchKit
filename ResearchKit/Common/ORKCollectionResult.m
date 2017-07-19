@@ -303,9 +303,10 @@
             ORKResult *markerResult = [result resultForIdentifier:markerIdentifier];
             
             // Look for existing subresults
-            NSString *prefix = [NSString stringWithFormat:@"%@.", identifier];
+            NSString *prefix = [NSString stringWithFormat:@"%@", identifier];
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier BEGINSWITH %@", prefix];
             NSArray *filteredResults = [result.results filteredArrayUsingPredicate:predicate];
+            NSInteger prefixLength = prefix.length + 1;
             
             // If either filtered results or a marker result are found then add a step result for them
             if (markerResult || (filteredResults.count > 0)) {
@@ -323,7 +324,9 @@
                 NSMutableArray *subresults = [NSMutableArray new];
                 for (ORKResult *subresult in filteredResults) {
                     ORKResult *copy = [subresult copy];
-                    copy.identifier = [subresult.identifier substringFromIndex:prefix.length];
+                    if (subresult.identifier.length > prefixLength) {
+                        copy.identifier = [subresult.identifier substringFromIndex:prefixLength];
+                    }
                     [subresults addObject:copy];
                 }
                 stepResult.results = subresults;
@@ -388,7 +391,11 @@
             for (ORKResult *result in stepResult.results) {
                 ORKResult *copy = [result copy];
                 NSString *subIdentifier = result.identifier ?: [NSString stringWithFormat:@"%@", @(result.hash)];
-                copy.identifier = [NSString stringWithFormat:@"%@.%@", stepResult.identifier, subIdentifier];
+                if (![stepResult.identifier isEqualToString:subIdentifier] || stepResult.results.count > 1) {
+                    // If the result identifier is the same as the step identifier and there is only one result,
+                    // then do not add the step identifier to the result identifier.
+                    copy.identifier = [NSString stringWithFormat:@"%@.%@", stepResult.identifier, subIdentifier];
+                }
                 [results addObject:copy];
             }
         } else {
