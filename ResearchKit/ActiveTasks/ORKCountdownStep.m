@@ -30,6 +30,7 @@
 
 
 #import "ORKCountdownStep.h"
+#import "ORKStep_Private.h"
 
 #import "ORKCountdownStepViewController.h"
 
@@ -61,6 +62,10 @@
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"duration cannot be shorter than %@ seconds.", @(ORKCountdownStepMinimumDuration)]  userInfo:nil];
     }
     
+}
+
+- (BOOL)allowsBackNavigation {
+    return NO;
 }
 
 @end

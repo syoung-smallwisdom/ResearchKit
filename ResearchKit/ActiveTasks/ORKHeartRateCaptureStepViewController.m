@@ -94,6 +94,10 @@
     return YES;
 }
 
+- (BOOL)disableIfUpsideDown {
+    return NO;
+}
+
 - (NSTimeInterval)stepDuration {
     NSTimeInterval const timeout = self.usesWatch ? 60.0 : 30.0;
     return MAX(timeout, [self captureStep].stepDuration);

@@ -70,7 +70,7 @@ typedef NS_OPTIONS(NSInteger, ORKWorkoutStepWatchState) {
 NSString * const ORKStepMarkerKey = @"step_marker";
 NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
 
-@interface ORKWorkoutStepViewController () <ORKRecorderDelegate>
+@interface ORKWorkoutStepViewController () <ORKRecorderDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, strong) ORKWorkoutMessage *pendingMessage;
 @property (nonatomic, assign) ORKWorkoutStepWatchState state;
@@ -94,6 +94,7 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
     NSArray *_recorders;
     NSDictionary *_healthRecorders;
     ORKLocationRecorder *_locationRecorder;
+    CLLocationManager *_locationManager;
 }
 
 - (ORKWorkoutStep *)workoutStep {
@@ -612,6 +613,16 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
         [recorder start];
     }
     [self startWatchApp];
+    
+    // Setup listener to check if outdoors
+    if (([self workoutStep].locationState == ORKLocationStateUnknown) &&
+        [[self workoutStep] shouldAlertUserToMoveOutdoors] &&
+        [CLLocationManager locationServicesEnabled] &&
+        (_locationManager == nil)) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        [_locationManager requestLocation];
+    }
 }
 
 - (void)stopRecorders {
@@ -626,6 +637,24 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
     for (ORKRecorder *recorder in _recorders) {
         [recorder stop];
     }
+    
+    _locationManager.delegate = nil;
+    _locationManager = nil;
+}
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    BOOL isOutdoors = [locations lastObject].horizontalAccuracy <= ORKLocationRequiredAccuracy;
+    [self workoutStep].locationState = isOutdoors ? ORKLocationStateOutdoors : ORKLocationStateInside;
+    _locationManager.delegate = nil;
+    _locationManager = nil;
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    // Just nil out the location manager
+    _locationManager.delegate = nil;
+    _locationManager = nil;
 }
 
 @end

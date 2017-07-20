@@ -276,6 +276,7 @@
 "CARDIO_OUTDOOR_INSTRUCTION_TITLE" = "Please move outdoors";
 "CARDIO_OUTDOOR_INSTRUCTION_TEXT" = "Your phone GPS indicates that you are currently indoors. Please step outdoors to before continuing.";
 "CARDIO_OUTDOOR_ALREADY_OUTSIDE" = "I am already outdoors.";
+"CARDIO_OUTDOOR_STAY_INDOORS" = "I want to stay inside.";
 "CARDIO_OUTDOOR_CONTINUE" = "I have moved outdoors and I am ready to continue.";
 
 /* Watch Connectivity */

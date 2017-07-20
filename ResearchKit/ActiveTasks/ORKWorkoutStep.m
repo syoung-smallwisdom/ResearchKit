@@ -105,6 +105,9 @@ ORKWorkoutResultIdentifier const ORKWorkoutResultIdentifierDistanceTraveled = @"
     if (!restStep) {
         restStep = [[ORKHeartRateCaptureStep alloc] initWithIdentifier:ORKWorkoutAfterStepIdentifier];
     }
+    else {
+        restStep = [restStep copyWithIdentifier:ORKWorkoutAfterStepIdentifier];
+    }
     
     // Add countdown to heart rate measuring
     ORKCountdownStep *countBeforeStep = [[ORKCountdownStep alloc] initWithIdentifier:ORKWorkoutBeforeCountdownStepIdentifier];
@@ -174,39 +177,38 @@ ORKWorkoutResultIdentifier const ORKWorkoutResultIdentifierDistanceTraveled = @"
 - (ORKStep *)stepAfterStepWithIdentifier:(NSString *)identifier withResult:(ORKTaskResult *)result {
     ORKStepResult *stepResult = [result stepResultForStepIdentifier:identifier];
     if ([identifier isEqualToString:ORKWorkoutOutdoorInstructionStepIdentifier]) {
-        NSString *nextIdentifier = [[(ORKChoiceQuestionResult *)[stepResult.results firstObject] choiceAnswers] firstObject];
-        return [self.pageTask stepWithIdentifier:(nextIdentifier ? : ORKWorkoutBeforeCountdownStepIdentifier)];
+        return [self.pageTask stepWithIdentifier:ORKWorkoutBeforeCountdownStepIdentifier];
     } else {
         ORKStep *nextStep = [super stepAfterStepWithIdentifier:identifier withResult:result];
         if ([self shouldAlertUserToMoveOutdoors] &&
-            [identifier isEqualToString:ORKWorkoutBeforeStepIdentifier]) {
+            [nextStep.identifier isEqualToString:ORKWorkoutBeforeStepIdentifier] &&
+            (self.locationState == ORKLocationStateInside)) {
             // If this is an outdoor workout and the accuracy indicates that the user is indoors
             // then instruct them to move outdoors.
-            ORKBooleanQuestionResult *outdoorsResult = (ORKBooleanQuestionResult *)[stepResult resultForIdentifier:ORKWorkoutResultIdentifierIsOutdoors];
-            if ((outdoorsResult != nil) && ![outdoorsResult.booleanAnswer boolValue]) {
-                return [self createOutdoorsInstructionStepWithNextStep:nextStep];
-            }
+            return [self createOutdoorsInstructionStep];
         }
         return nextStep;
     }
 }
 
 - (BOOL)shouldStopRecordersOnFinishedWithStep:(ORKStep *)step {
-    return [step.identifier isEqualToString:[self.steps lastObject].identifier];
+    return [step.identifier isEqualToString:ORKWorkoutAfterStepIdentifier];
 }
 
 - (BOOL)shouldAlertUserToMoveOutdoors {
     return (self.workoutConfiguration.locationType == HKWorkoutSessionLocationTypeOutdoor);
 }
 
-- (ORKQuestionStep *)createOutdoorsInstructionStepWithNextStep:(ORKStep *)nextStep {
+- (ORKQuestionStep *)createOutdoorsInstructionStep {
     
     ORKTextChoice *choice1 = [ORKTextChoice choiceWithText:ORKLocalizedString(@"CARDIO_OUTDOOR_ALREADY_OUTSIDE", nil)
-                                                     value:nextStep.identifier];
-    ORKTextChoice *choice2 = [ORKTextChoice choiceWithText:ORKLocalizedString(@"CARDIO_OUTDOOR_CONTINUE", nil)
-                                                     value:ORKWorkoutBeforeCountdownStepIdentifier];
+                                                     value:@"CARDIO_OUTDOOR_ALREADY_OUTSIDE"];
+    ORKTextChoice *choice2 = [ORKTextChoice choiceWithText:ORKLocalizedString(@"CARDIO_OUTDOOR_STAY_INDOORS", nil)
+                                                     value:@"CARDIO_OUTDOOR_STAY_INDOORS"];
+    ORKTextChoice *choice3 = [ORKTextChoice choiceWithText:ORKLocalizedString(@"CARDIO_OUTDOOR_CONTINUE", nil)
+                                                     value:@"CARDIO_OUTDOOR_CONTINUE"];
     ORKAnswerFormat *format = [ORKAnswerFormat choiceAnswerFormatWithStyle:ORKChoiceAnswerStyleSingleChoice
-                                                               textChoices:@[choice1, choice2]];
+                                                               textChoices:@[choice1, choice2, choice3]];
     
     ORKQuestionStep *step = [ORKQuestionStep questionStepWithIdentifier:ORKWorkoutOutdoorInstructionStepIdentifier
                                                                   title:ORKLocalizedString(@"CARDIO_OUTDOOR_INSTRUCTION_TITLE", nil)
