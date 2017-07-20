@@ -87,7 +87,7 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
     
     // results to add to base step
     ORKWorkoutResult *_workoutResult;
-    NSArray *_results;
+    ORKCollectionResult *_recorderResults;
     
     // recorders
     ORKDataLogRecorder *_watchRecorder;
@@ -382,7 +382,7 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
             ORKBooleanQuestionResult *boolResult = [[ORKBooleanQuestionResult alloc] initWithIdentifier:ORKWorkoutResultIdentifierUserEnded];
             boolResult.booleanAnswer = @YES;
             boolResult.startDate = workoutMessage.timestamp;
-            _results = [_results arrayByAddingObject:boolResult] ? : @[boolResult];
+            [self addResult:boolResult withRecorder:nil];
         }
         
         // Unassign self as delegate
@@ -483,8 +483,7 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
 #pragma mark - ORKRecorderDelegate
 
 - (void)recorder:(ORKRecorder *)recorder didCompleteWithResult:(ORKResult *)result {
-    _results = [_results arrayByAddingObject:result] ? : @[result];
-    [self notifyDelegateOnResultChange];
+    [self addResult:result withRecorder:recorder];
 }
 
 - (void)recorder:(ORKRecorder *)recorder didFailWithError:(NSError *)error {
@@ -507,6 +506,23 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
 
 #pragma mark - Recorder management
 
+- (void)addResult:(ORKResult *)result withRecorder:(nullable ORKRecorder *)recorder {
+    ORKResult *previousResult = [_recorderResults resultForIdentifier:result.identifier];
+    if (previousResult) {
+        ORK_Log_Debug(@"Replacing previous result for recorder %@ with new result %@", recorder, result);
+        NSMutableArray *results = [_recorderResults.results mutableCopy];
+        NSInteger idx = [results indexOfObject:previousResult];
+        [results replaceObjectAtIndex:idx withObject:result];
+    } else {
+        ORK_Log_Debug(@"Adding result for recorder %@ with new result %@", recorder, result);
+        if (_recorderResults == nil) {
+            _recorderResults = [[ORKCollectionResult alloc] initWithIdentifier:@"additionalResults"];
+        }
+        _recorderResults.results = [_recorderResults.results arrayByAddingObject:result] ? : @[result];
+    }
+    [self notifyDelegateOnResultChange];
+}
+
 - (ORKStepResult *)result {
     ORKStepResult *sResult = [super result];
     
@@ -514,8 +530,8 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
         sResult.results = [sResult.results arrayByAddingObject:_workoutResult] ? : @[_workoutResult];
     }
     
-    if (_results) {
-        sResult.results = [sResult.results arrayByAddingObjectsFromArray:_results] ? : _results;
+    if (_recorderResults.results) {
+        sResult.results = [sResult.results arrayByAddingObjectsFromArray:_recorderResults.results] ? : _recorderResults.results;
     }
     
     return sResult;

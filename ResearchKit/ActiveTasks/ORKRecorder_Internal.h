@@ -52,6 +52,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) NSTimeInterval referenceUptime;
 
+@property (nonatomic, readonly) BOOL isConsolidated;
+
 - (NSString *)recorderType;
 
 - (nullable ORKDataLogger *)makeJSONDataLoggerWithError:(NSError * _Nullable *)error NS_REQUIRES_SUPER;

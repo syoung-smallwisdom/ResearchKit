@@ -42,7 +42,6 @@
 
 
 @interface ORKAccelerometerRecorder () {
-    ORKDataLogger *_logger;
     NSError *_recordingError;
 }
 
@@ -62,10 +61,6 @@
         self.continuesInBackground = YES;
     }
     return self;
-}
-
-- (void)dealloc {
-    [_logger finishCurrentLog];
 }
 
 - (NSString *)recorderType {
@@ -89,15 +84,6 @@
     
     self.motionManager = [self createMotionManager];
     
-    if (!_logger && !self.sharedLogger) {
-        NSError *error = nil;
-        _logger = [self makeJSONDataLoggerWithError:&error];
-        if (!_logger) {
-            [self finishRecordingWithError:error];
-            return;
-        }
-    }
-    
     if (!self.motionManager || !self.motionManager.accelerometerAvailable) {
         NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain
                                              code:NSFeatureUnsupportedError
@@ -115,14 +101,14 @@
     [self.motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData *data, NSError *error) {
          BOOL success = NO;
          if (data) {
-             ORKDataLogger *logger = self.sharedLogger ? : _logger;
+             ORKDataLogger *logger = self.logger;
              NSTimeInterval timestamp = data.timestamp;
              if (self.referenceUptime > 0) {
                  timestamp = (data.timestamp - self.referenceUptime);
              }
-             BOOL consolidated = (self.sharedLogger != nil);
+             BOOL consolidated = [self isConsolidated];
              NSMutableDictionary *dict = [[data ork_JSONDictionaryWithTimestamp:timestamp consolidated:consolidated] mutableCopy];
-             if (consolidated) {
+             if ([self isConsolidated]) {
                  dict[ORKRecorderIdentifierKey] = self.identifier;
              }
              success = [logger append:[dict copy] error:&error];
@@ -136,22 +122,16 @@
      }];
 }
 
+- (BOOL)isConsolidated {
+    return (self.sharedLogger != nil);
+}
+
 - (NSDictionary *)userInfo {
     return  @{ @"frequency": @(self.frequency) };
 }
 
 - (void)stop {
     [self doStopRecording];
-    [_logger finishCurrentLog];
-    
-    NSError *error = _recordingError;
-    _recordingError = nil;
-    __block NSURL *fileUrl = nil;
-    [_logger enumerateLogs:^(NSURL *logFileUrl, BOOL *stop) {
-        fileUrl = logFileUrl;
-    } error:&error];
-    
-    [self reportFileResultWithFile:fileUrl error:error];
     
     [super stop];
 }
@@ -166,12 +146,6 @@
 - (void)finishRecordingWithError:(NSError *)error {
     [self doStopRecording];
     [super finishRecordingWithError:nil];
-}
-
-- (void)reset {
-    [super reset];
-    
-    _logger = nil;
 }
 
 - (BOOL)isRecording {

@@ -50,12 +50,13 @@
 
 #import "ORKHelpers_Internal.h"
 
+@import CoreMotion;
+
 @implementation ORKFitnessStepViewController {
     NSInteger _intendedSteps;
     ORKFitnessContentView *_contentView;
     NSNumberFormatter *_hrFormatter;
     BOOL _userEndedWorkout;
-    id <NSObject> _rotationObserver;
 }
 
 - (instancetype)initWithStep:(ORKStep *)step {    
@@ -123,21 +124,14 @@
     
     // Disable user interaction if the device is upside-down b/c then it is suppose to be in a pocket and
     // we don't want users to accidentally butt cancel.
-    _rotationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceOrientationDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-        BOOL enabled = ([UIDevice currentDevice].orientation != UIDeviceOrientationPortraitUpsideDown);
-        self.view.window.userInteractionEnabled = enabled;
-        self.view.window.alpha = enabled ? 1.0 : 0.0;
-    }];
+    _disableIfUpsideDown = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     // Re-enable the window and clear the rotation observer
-    if (_rotationObserver) {
-        [[NSNotificationCenter defaultCenter] removeObserver:_rotationObserver];
-        _rotationObserver = nil;
-    }
+    _disableIfUpsideDown = NO;
     self.view.window.userInteractionEnabled = YES;
     self.view.window.alpha = 1.0;
 }
@@ -213,6 +207,16 @@
 - (void)pedometerRecorderDidUpdate:(ORKPedometerRecorder *)pedometerRecorder {
     double distanceInMeters = pedometerRecorder.totalDistance;
     [self updateDistance:distanceInMeters];
+}
+
+#pragma mark - deviceMotionRecorderDidUpdateWithMotion
+
+- (void)deviceMotionRecorderDidUpdateWithMotion:(CMDeviceMotion *)motion {
+    if (self.disableIfUpsideDown) {
+        BOOL enabled = motion.gravity.y < 0.5;
+        self.view.window.userInteractionEnabled = enabled;
+        self.view.window.alpha = enabled ? 1.0 : 0.3;
+    }
 }
 
 @end

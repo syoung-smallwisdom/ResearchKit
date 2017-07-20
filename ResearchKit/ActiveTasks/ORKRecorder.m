@@ -274,7 +274,7 @@ NSString *const ORKRecorderTimestampKey = @"timestamp";
 @synthesize logger = _logger;
 
 - (ORKDataLogger *)logger {
-    return self.sharedLogger ? : _logger;
+    return [self isConsolidated] && (self.sharedLogger != nil) ? self.sharedLogger : _logger;
 }
 
 - (void)dealloc {
@@ -311,17 +311,18 @@ NSString *const ORKRecorderTimestampKey = @"timestamp";
         return;
     }
     _isRecording = NO;
-    
-    [_logger finishCurrentLog];
-    
-    NSError *error = nil;
-    __block NSURL *fileUrl = nil;
-    [_logger enumerateLogs:^(NSURL *logFileUrl, BOOL *stop) {
-        fileUrl = logFileUrl;
-    } error:&error];
-    
-    [self reportFileResultWithFile:fileUrl error:error];
-    _logger = nil;
+    if (_logger) {
+        [_logger finishCurrentLog];
+        
+        NSError *error = nil;
+        __block NSURL *fileUrl = nil;
+        [_logger enumerateLogs:^(NSURL *logFileUrl, BOOL *stop) {
+            fileUrl = logFileUrl;
+        } error:&error];
+        
+        [self reportFileResultWithFile:fileUrl error:error];
+        _logger = nil;
+    }
     
     [super stop];
 }

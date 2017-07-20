@@ -66,11 +66,12 @@ NSString * const ORKConsolidatedRecorderId = @"recorder_data";
     ORKActiveStepView *_activeStepView;
     ORKActiveStepTimer *_activeStepTimer;
 
-    NSArray *_recorderResults;
+    ORKCollectionResult *_recorderResults;
     
     SystemSoundID _alertSound;
     NSURL *_alertSoundURL;
     BOOL _hasSpokenHalfwayCountdown;
+    ORKDataLogRecorder *_sharedRecorder;
 }
 
 @property (nonatomic, strong) NSArray *recorders;
@@ -84,7 +85,7 @@ NSString * const ORKConsolidatedRecorderId = @"recorder_data";
     
     self = [super initWithStep:step];
     if (self) {
-        _recorderResults = [NSArray new];
+        _recorderResults = [[ORKCollectionResult alloc] initWithIdentifier:@"recorders"];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -220,8 +221,8 @@ NSString * const ORKConsolidatedRecorderId = @"recorder_data";
 
 - (ORKStepResult *)result {
     ORKStepResult *sResult = [super result];
-    if (_recorderResults) {
-        sResult.results = [sResult.results arrayByAddingObjectsFromArray:_recorderResults] ? : _recorderResults;
+    if (_recorderResults.results) {
+        sResult.results = [sResult.results arrayByAddingObjectsFromArray:_recorderResults.results] ? : _recorderResults.results;
     }
     return sResult;
 }
@@ -244,21 +245,16 @@ NSString * const ORKConsolidatedRecorderId = @"recorder_data";
         recorder.delegate = nil;
         [recorder stop];
     }
+    
     NSMutableArray *recorders = [NSMutableArray array];
     
     // Setup the consolidated recorder that the other recorders will point at
-    ORKDataLogRecorder *sharedRecorder = nil;
+    _sharedRecorder = nil;
     if ([self activeStep].shouldConsolidateRecorders) {
-        sharedRecorder = [[ORKDataLogRecorder alloc] initWithIdentifier:ORKConsolidatedRecorderId
+        _sharedRecorder = [[ORKDataLogRecorder alloc] initWithIdentifier:ORKConsolidatedRecorderId
                                                                    step:self.step
                                                         outputDirectory:self.outputDirectory];
-        sharedRecorder.delegate = self;
-        NSError *error = nil;
-        sharedRecorder.logger = [sharedRecorder makeJSONDataLoggerWithError:&error];
-        if (error) {
-            [self recorder:sharedRecorder didFailWithError:error];
-            return;
-        }
+        _sharedRecorder.delegate = self;
     }
     
     for (ORKRecorderConfiguration * provider in self.activeStep.recorderConfigurations) {
@@ -269,16 +265,7 @@ NSString * const ORKConsolidatedRecorderId = @"recorder_data";
         recorder.configuration = provider;
         recorder.delegate = self;
         
-        // Not all the recorders support using a consolidated log file but the ones that don't
-        // will ignore this property.
-        recorder.sharedLogger = sharedRecorder.logger;
-        
         [recorders addObject:recorder];
-    }
-    
-    // Add the shared recorder last so that it is stopped last.
-    if (sharedRecorder) {
-        [recorders addObject:sharedRecorder];
     }
     
     self.recorders = recorders;
@@ -292,6 +279,9 @@ NSString * const ORKConsolidatedRecorderId = @"recorder_data";
     NSMutableArray *recorders = [self.recorders mutableCopy];
     [recorders removeObject:recorder];
     self.recorders = [recorders copy];
+    
+    [_sharedRecorder stop];
+    _sharedRecorder = nil;
 }
 
 - (void)setOutputDirectory:(NSURL *)outputDirectory {
@@ -324,9 +314,13 @@ NSString * const ORKConsolidatedRecorderId = @"recorder_data";
 
 - (void)startRecorders {
     [self recordersWillStart];
+    
+    [_sharedRecorder start];
+    
     // Start recorders
     NSTimeInterval referenceUptime = [self activeStep].shouldConsolidateRecorders ? [NSProcessInfo processInfo].systemUptime : 0;
     for (ORKRecorder *recorder in self.recorders) {
+        recorder.sharedLogger =  _sharedRecorder.logger;
         recorder.referenceUptime = referenceUptime;
         [recorder viewController:self willStartStepWithView:self.customViewContainer];
         [recorder start];
@@ -338,6 +332,7 @@ NSString * const ORKConsolidatedRecorderId = @"recorder_data";
     for (ORKRecorder *recorder in self.recorders) {
         [recorder stop];
     }
+    [_sharedRecorder stop];
 }
 
 - (void)playSound {
@@ -520,7 +515,17 @@ NSString * const ORKConsolidatedRecorderId = @"recorder_data";
 #pragma mark - ORKRecorderDelegate
 
 - (void)recorder:(ORKRecorder *)recorder didCompleteWithResult:(ORKResult *)result {
-    _recorderResults = [_recorderResults arrayByAddingObject:result];
+    
+    ORKResult *previousResult = [_recorderResults resultForIdentifier:result.identifier];
+    if (previousResult) {
+        ORK_Log_Debug(@"Replacing previous result for recorder %@ with new result %@", recorder, result);
+        NSMutableArray *results = [_recorderResults.results mutableCopy];
+        NSInteger idx = [results indexOfObject:previousResult];
+        [results replaceObjectAtIndex:idx withObject:result];
+    } else {
+        ORK_Log_Debug(@"Adding result for recorder %@ with new result %@", recorder, result);
+        _recorderResults.results = [_recorderResults.results arrayByAddingObject:result] ? : @[result];
+    }
     [self notifyDelegateOnResultChange];
 }
 
