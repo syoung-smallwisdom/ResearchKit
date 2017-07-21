@@ -41,7 +41,7 @@ open class ORKCardioWorkoutInterfaceController: WKInterfaceController, ORKWorkou
     
     public var summaryControllerName = ORKSummaryInterfaceController.name
     
-    public var walkingDuration: TimeInterval = 2 * 60 // DO NOT COMMIT!!! 6 * 60
+    public var walkingDuration: TimeInterval = 6 * 60
     public var isInitialState: Bool = true;
     
     // MARK: IBOutlets
@@ -70,11 +70,14 @@ open class ORKCardioWorkoutInterfaceController: WKInterfaceController, ORKWorkou
         
         // setup permissions and start the workout
         if let workoutConfiguration = context as? HKWorkoutConfiguration {
+            debugPrint("started from phone with \(workoutConfiguration)")
             // start the workout with a phone connection
             connector.startedFromPhone = true
             connector.startWorkout(with: workoutConfiguration)
             
         } else {
+            debugPrint("started from watch")
+            
             // Create workout configuration
             let workoutConfiguration = HKWorkoutConfiguration()
             workoutConfiguration.activityType = .walking
@@ -97,11 +100,13 @@ open class ORKCardioWorkoutInterfaceController: WKInterfaceController, ORKWorkou
     }
     
     open func workoutConnector(_ workoutConnector: ORKWorkoutConnector, didEndWorkout workout:HKWorkout) {
+        debugPrint("didEndWorkout: \(workout)")
         durationTimer?.stop()
         WKInterfaceController.reloadRootControllers(withNames: [summaryControllerName], contexts: [workout])
     }
     
     open func workoutConnector(_ workoutConnector: ORKWorkoutConnector, didReceiveMessage message:ORKWorkoutMessage) {
+        debugPrint("didReceiveMessage: \(message)")
         guard let instructionMessage = message as? ORKInstructionWorkoutMessage else { return }
         if let instruction = instructionMessage.instruction {
             titleLabel?.setText(instruction)
@@ -113,10 +118,12 @@ open class ORKCardioWorkoutInterfaceController: WKInterfaceController, ORKWorkou
     }
     
     open func workoutConnector(_ workoutConnector: ORKWorkoutConnector, didUpdateTotalDistance totalDistance:HKQuantity) {
+        debugPrint("didUpdateTotalDistance: \(totalDistance)")
         distanceLabel?.setText(formatter.formatted(withDistance: totalDistance))
     }
     
     open func workoutConnector(_ workoutConnector: ORKWorkoutConnector, didUpdateHeartRate heartRate:HKQuantity) {
+        debugPrint("didUpdateHeartRate: \(heartRate)")
         if (!connector.startedFromPhone && isInitialState) {
             isInitialState = false
             titleLabel?.setText(formatter.localizedString(withKey: "FITNESS_WALK_INSTRUCTION_WATCH"))

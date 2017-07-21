@@ -137,7 +137,7 @@ const CLLocationAccuracy ORKLocationRequiredAccuracy = 20;
                 // with the V1 schema, while allowing the data to be compared to other recorders using the
                 // same value for the timestamp.
                 id timestamp = nil;
-                BOOL consolidated = (self.sharedLogger != nil);
+                BOOL consolidated = [self isConsolidated];
                 if (consolidated || (self.referenceUptime > 0)) {
                     NSTimeInterval uptimeDelta = (self.referenceUptime > 0) ? (self.uptime - self.referenceUptime) : 0;
                     timestamp = [NSDecimalNumber numberWithDouble:(uptimeDelta + timeInterval)];
@@ -189,6 +189,10 @@ const CLLocationAccuracy ORKLocationRequiredAccuracy = 20;
             [self stop];
         });
     }
+}
+
+- (BOOL)isConsolidated {
+    return (self.sharedLogger != nil);
 }
 
 - (void)finishRecordingWithError:(NSError *)error {

@@ -56,6 +56,7 @@
     if (self) {
         ORKThrowInvalidArgumentExceptionIfNil(identifier);
         _identifier = [identifier copy];
+        _allowsBackNavigation = YES;
     }
     return self;
 }
@@ -98,6 +99,7 @@
     step.text = _text;
     step.shouldTintImages = _shouldTintImages;
     step.useSurveyMode = _useSurveyMode;
+    step.allowsBackNavigation = _allowsBackNavigation;
     return step;
 }
 
@@ -135,6 +137,7 @@
         ORK_DECODE_OBJ_CLASS(aDecoder, task, ORKOrderedTask);
         ORK_DECODE_BOOL(aDecoder, shouldTintImages);
         ORK_DECODE_BOOL(aDecoder, useSurveyMode);
+        ORK_DECODE_BOOL(aDecoder, allowsBackNavigation);
     }
     return self;
 }
@@ -146,6 +149,7 @@
     ORK_ENCODE_BOOL(aCoder, optional);
     ORK_ENCODE_BOOL(aCoder, shouldTintImages);
     ORK_ENCODE_BOOL(aCoder, useSurveyMode);
+    ORK_ENCODE_BOOL(aCoder, allowsBackNavigation);
     if ([_task isKindOfClass:[ORKOrderedTask class]]) {
         ORK_ENCODE_OBJ(aCoder, task);
     }
@@ -156,10 +160,6 @@
 }
 
 - (BOOL)showsProgress {
-    return YES;
-}
-
-- (BOOL)allowsBackNavigation {
     return YES;
 }
 

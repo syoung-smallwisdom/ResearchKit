@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) BOOL showsProgress;
 
 // Whether to allow navigation back from this step.
-@property (nonatomic, assign, readonly) BOOL allowsBackNavigation;
+@property (nonatomic, assign) BOOL allowsBackNavigation;
 
 @end
 

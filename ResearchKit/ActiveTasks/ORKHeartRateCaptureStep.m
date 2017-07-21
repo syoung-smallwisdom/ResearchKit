@@ -99,6 +99,10 @@
     }
 }
 
+- (BOOL)allowsBackNavigation {
+    return NO;
+}
+
 + (BOOL)supportsSecureCoding {
     return YES;
 }

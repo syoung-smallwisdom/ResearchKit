@@ -214,12 +214,6 @@ public final class ORKWorkoutUtilities: NSObject {
     }
 }
 
-func debug_print(_ message: String) {
-    #if DEBUG
-        print(message)
-    #endif
-}
-
 public extension HKWorkoutActivityType {
     
     /**

@@ -90,6 +90,12 @@ ORK_EXTERN NSString *const ORKWorkoutAfterCountdownStepIdentifier ORK_AVAILABLE_
 @class ORKHeartRateCaptureStep;
 @class ORKRecorderConfiguration;
 
+typedef NS_ENUM(NSInteger, ORKLocationState) {
+    ORKLocationStateUnknown,
+    ORKLocationStateInside,
+    ORKLocationStateOutdoors
+};
+
 /**
  The `ORKWorkoutStep` is a step that can be used to group a set of active steps to lead the user
  through a workout. 
@@ -128,6 +134,11 @@ HK_CLASS_AVAILABLE_IOS_WATCHOS(10_0, 3_0)
  See also: `ORKRecorderConfiguration` and `ORKRecorder`.
  */
 @property (nonatomic, copy, nullable) NSArray<ORKRecorderConfiguration *> *recorderConfigurations;
+
+/**
+ Mutable property for tracking the location state of the task that is currently being run.
+ */
+@property (nonatomic) ORKLocationState locationState;
 
 // Method unavailable
 - (instancetype)initWithIdentifier:(NSString *)identifier

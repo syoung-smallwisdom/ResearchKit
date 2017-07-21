@@ -249,6 +249,7 @@ NSString *const ORKWorkoutTiredAfterQuestionStepIdentifier = @"tiredAfter";
         pocketStep.text = ORKLocalizedString(@"CARDIO_WALK_INSTRUCTION_TEXT", nil);
         pocketStep.image = [UIImage imageNamed:@"pocket" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
         pocketStep.shouldTintImages = YES;
+        pocketStep.allowsBackNavigation = NO;
         
         ORKCountdownStep *countdownStep = [[ORKCountdownStep alloc] initWithIdentifier:ORKCountdownStepIdentifier];
         countdownStep.stepDuration = 5.0;
@@ -266,10 +267,22 @@ NSString *const ORKWorkoutTiredAfterQuestionStepIdentifier = @"tiredAfter";
         fitnessStep.shouldVibrateOnStart = YES;
         fitnessStep.shouldPlaySoundOnStart = YES;
         fitnessStep.watchInstruction = ORKLocalizedString(@"FITNESS_WALK_INSTRUCTION_WATCH", nil);
+        fitnessStep.shouldSpeakRemainingTimeAtHalfway = YES;
         fitnessStep.beginCommand = ORKWorkoutCommandStartMoving;
         fitnessStep.shouldConsolidateRecorders = YES;
+        fitnessStep.endCommand = ORKWorkoutCommandStopMoving;
+        fitnessStep.shouldVibrateOnFinish = YES;
+        fitnessStep.shouldPlaySoundOnFinish = YES;
+        fitnessStep.finishedSpokenInstruction = ORKLocalizedString(@"FITNESS_WALK_INSTRUCTION_END", nil);
         
         ORKHeartRateCaptureStep *restStep = [[ORKHeartRateCaptureStep alloc] initWithIdentifier:ORKWorkoutAfterStepIdentifier];
+        ORKPredefinedTaskOption restOptions = options & (ORKPredefinedTaskOptionExcludePedometer |
+                                                         ORKPredefinedTaskOptionExcludeAccelerometer);
+        NSArray *restConfig =  [ORKFitnessStep recorderConfigurationsWithOptions:restOptions
+                                                            relativeDistanceOnly:relativeDistanceOnly
+                                                                   standingStill:YES];
+        restStep.recorderConfigurations = [restStep.recorderConfigurations arrayByAddingObjectsFromArray:restConfig];
+        restStep.shouldConsolidateRecorders = YES;
         restStep.stepDuration = restDuration;
         restStep.minimumDuration = restDuration;
         
@@ -295,6 +308,7 @@ NSString *const ORKWorkoutTiredAfterQuestionStepIdentifier = @"tiredAfter";
                                                                        text:ORKLocalizedString(@"CARDIO_POST_SURVEY_PROMPT", nil)
                                                                      answer:format];
         step.optional = NO;
+        step.allowsBackNavigation = NO;
         
         ORKStepArrayAddStep(steps, step);
     }

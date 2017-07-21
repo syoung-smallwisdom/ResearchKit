@@ -60,4 +60,8 @@
     return stepViewController;
 }
 
+- (BOOL)allowsBackNavigation {
+    return NO;
+}
+
 @end

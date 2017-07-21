@@ -70,7 +70,7 @@ typedef NS_OPTIONS(NSInteger, ORKWorkoutStepWatchState) {
 NSString * const ORKStepMarkerKey = @"step_marker";
 NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
 
-@interface ORKWorkoutStepViewController () <ORKRecorderDelegate>
+@interface ORKWorkoutStepViewController () <ORKRecorderDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, strong) ORKWorkoutMessage *pendingMessage;
 @property (nonatomic, assign) ORKWorkoutStepWatchState state;
@@ -87,13 +87,14 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
     
     // results to add to base step
     ORKWorkoutResult *_workoutResult;
-    NSArray *_results;
+    ORKCollectionResult *_recorderResults;
     
     // recorders
     ORKDataLogRecorder *_watchRecorder;
     NSArray *_recorders;
     NSDictionary *_healthRecorders;
     ORKLocationRecorder *_locationRecorder;
+    CLLocationManager *_locationManager;
 }
 
 - (ORKWorkoutStep *)workoutStep {
@@ -107,6 +108,9 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
     dispatch_async(dispatch_get_main_queue(), ^{
         [self startRecorders];
     });
+    
+    // While running the test, do not allow the application to go to sleep
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -114,6 +118,9 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
     
     // Always stop the recorders and watch
     [self stopRecorders];
+    
+    // Re-enable idle timer
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
 }
 
 - (void)stepViewControllerWillAppear:(ORKStepViewController *)stepViewController {
@@ -126,7 +133,7 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
     [_watchRecorder.logger append:json error:nil];
     
     // Reset the location recorder
-    if ([stepViewController.step isKindOfClass:[ORKFitnessStep class]]) {
+    if ([stepViewController.step isKindOfClass:[ORKFitnessStep class]] && (_locationRecorder != nil)) {
         BOOL standingStill = ((ORKFitnessStep *)stepViewController.step).isStandingStill;
         ORKLocationRecorderConfiguration *config = (ORKLocationRecorderConfiguration *)_locationRecorder.configuration;
         if (config.standingStill != standingStill) {
@@ -376,7 +383,7 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
             ORKBooleanQuestionResult *boolResult = [[ORKBooleanQuestionResult alloc] initWithIdentifier:ORKWorkoutResultIdentifierUserEnded];
             boolResult.booleanAnswer = @YES;
             boolResult.startDate = workoutMessage.timestamp;
-            _results = [_results arrayByAddingObject:boolResult] ? : @[boolResult];
+            [self addResult:boolResult withRecorder:nil];
         }
         
         // Unassign self as delegate
@@ -477,8 +484,7 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
 #pragma mark - ORKRecorderDelegate
 
 - (void)recorder:(ORKRecorder *)recorder didCompleteWithResult:(ORKResult *)result {
-    _results = [_results arrayByAddingObject:result] ? : @[result];
-    [self notifyDelegateOnResultChange];
+    [self addResult:result withRecorder:recorder];
 }
 
 - (void)recorder:(ORKRecorder *)recorder didFailWithError:(NSError *)error {
@@ -501,6 +507,23 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
 
 #pragma mark - Recorder management
 
+- (void)addResult:(ORKResult *)result withRecorder:(nullable ORKRecorder *)recorder {
+    ORKResult *previousResult = [_recorderResults resultForIdentifier:result.identifier];
+    if (previousResult) {
+        ORK_Log_Debug(@"Replacing previous result for recorder %@ with new result %@", recorder, result);
+        NSMutableArray *results = [_recorderResults.results mutableCopy];
+        NSInteger idx = [results indexOfObject:previousResult];
+        [results replaceObjectAtIndex:idx withObject:result];
+    } else {
+        ORK_Log_Debug(@"Adding result for recorder %@ with new result %@", recorder, result);
+        if (_recorderResults == nil) {
+            _recorderResults = [[ORKCollectionResult alloc] initWithIdentifier:@"additionalResults"];
+        }
+        _recorderResults.results = [_recorderResults.results arrayByAddingObject:result] ? : @[result];
+    }
+    [self notifyDelegateOnResultChange];
+}
+
 - (ORKStepResult *)result {
     ORKStepResult *sResult = [super result];
     
@@ -508,8 +531,8 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
         sResult.results = [sResult.results arrayByAddingObject:_workoutResult] ? : @[_workoutResult];
     }
     
-    if (_results) {
-        sResult.results = [sResult.results arrayByAddingObjectsFromArray:_results] ? : _results;
+    if (_recorderResults.results) {
+        sResult.results = [sResult.results arrayByAddingObjectsFromArray:_recorderResults.results] ? : _recorderResults.results;
     }
     
     return sResult;
@@ -590,6 +613,16 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
         [recorder start];
     }
     [self startWatchApp];
+    
+    // Setup listener to check if outdoors
+    if (([self workoutStep].locationState == ORKLocationStateUnknown) &&
+        [[self workoutStep] shouldAlertUserToMoveOutdoors] &&
+        [CLLocationManager locationServicesEnabled] &&
+        (_locationManager == nil)) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        [_locationManager requestLocation];
+    }
 }
 
 - (void)stopRecorders {
@@ -604,6 +637,24 @@ NSString * const ORKWorkoutWatchHeartRateKey = @"bpm_watch";
     for (ORKRecorder *recorder in _recorders) {
         [recorder stop];
     }
+    
+    _locationManager.delegate = nil;
+    _locationManager = nil;
+}
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    BOOL isOutdoors = [locations lastObject].horizontalAccuracy <= ORKLocationRequiredAccuracy;
+    [self workoutStep].locationState = isOutdoors ? ORKLocationStateOutdoors : ORKLocationStateInside;
+    _locationManager.delegate = nil;
+    _locationManager = nil;
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    // Just nil out the location manager
+    _locationManager.delegate = nil;
+    _locationManager = nil;
 }
 
 @end

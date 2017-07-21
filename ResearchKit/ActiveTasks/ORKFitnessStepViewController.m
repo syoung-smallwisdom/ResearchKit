@@ -50,6 +50,8 @@
 
 #import "ORKHelpers_Internal.h"
 
+@import CoreMotion;
+
 @implementation ORKFitnessStepViewController {
     NSInteger _intendedSteps;
     ORKFitnessContentView *_contentView;
@@ -115,6 +117,23 @@
     _contentView.timeLeft = self.fitnessStep.stepDuration;
     self.activeStepView.activeCustomView = _contentView;
     self.activeStepView.stepViewFillsAvailableSpace = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // Disable user interaction if the device is upside-down b/c then it is suppose to be in a pocket and
+    // we don't want users to accidentally butt cancel.
+    _disableIfUpsideDown = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    // Re-enable the window and clear the rotation observer
+    _disableIfUpsideDown = NO;
+    self.view.window.userInteractionEnabled = YES;
+    self.view.window.alpha = 1.0;
 }
 
 - (void)updateHeartRateWithQuantity:(HKQuantitySample *)quantity unit:(HKUnit *)unit {
@@ -188,6 +207,16 @@
 - (void)pedometerRecorderDidUpdate:(ORKPedometerRecorder *)pedometerRecorder {
     double distanceInMeters = pedometerRecorder.totalDistance;
     [self updateDistance:distanceInMeters];
+}
+
+#pragma mark - deviceMotionRecorderDidUpdateWithMotion
+
+- (void)deviceMotionRecorderDidUpdateWithMotion:(CMDeviceMotion *)motion {
+    if (self.disableIfUpsideDown) {
+        BOOL enabled = motion.gravity.y < 0.5;
+        self.view.window.userInteractionEnabled = enabled;
+        self.view.window.alpha = enabled ? 1.0 : 0.3;
+    }
 }
 
 @end

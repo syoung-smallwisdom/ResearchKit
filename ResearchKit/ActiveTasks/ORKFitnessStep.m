@@ -98,6 +98,10 @@
     }
 }
 
+- (BOOL)allowsBackNavigation {
+    return NO;
+}
+
 - (instancetype)copyWithZone:(NSZone *)zone {
     ORKFitnessStep *step = [super copyWithZone:zone];
     step.standingStill = self.standingStill;

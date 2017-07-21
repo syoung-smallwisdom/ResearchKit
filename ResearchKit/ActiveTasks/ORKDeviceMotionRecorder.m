@@ -95,7 +95,7 @@
              if (self.referenceUptime > 0) {
                  timestamp = (data.timestamp - self.referenceUptime);
              }
-             BOOL consolidated = (self.sharedLogger != nil);
+             BOOL consolidated = [self isConsolidated];
              NSMutableDictionary *dict = [[data ork_JSONDictionaryWithTimestamp:timestamp consolidated:consolidated] mutableCopy];
              if (consolidated) {
                  dict[ORKRecorderIdentifierKey] = self.identifier;
@@ -112,6 +112,10 @@
              });
          }
      }];
+}
+
+- (BOOL)isConsolidated {
+    return (self.sharedLogger != nil);
 }
 
 - (NSString *)recorderType {
