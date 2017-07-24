@@ -37,7 +37,6 @@
 #import "HKSample+ORKJSONDictionary.h"
 
 @interface ORKHealthQuantityTypeRecorder () {
-    ORKDataLogger *_logger;
     BOOL _isRecording;
     HKHealthStore *_healthStore;
     NSPredicate *_samplePredicate;
@@ -45,6 +44,8 @@
     HKQueryAnchor *_anchor;
     HKQuantitySample *_lastSample;
 }
+
+@property (nonatomic) NSTimeInterval uptime;
 
 @end
 
@@ -68,10 +69,6 @@
         _anchor = [HKQueryAnchor anchorFromValue:HKAnchoredObjectQueryNoAnchor];
     }
     return self;
-}
-
-- (void)dealloc {
-    [_logger finishCurrentLog];
 }
 
 - (void)updateMostRecentSample:(HKQuantitySample *)sample {
@@ -101,14 +98,25 @@ static const NSInteger _HealthAnchoredQueryLimit = 100;
     // Do conversion to dictionary on whatever queue we happen to be on.
     NSMutableArray *dictionaries = [NSMutableArray arrayWithCapacity:resultCount];
     [results enumerateObjectsUsingBlock:^(HKQuantitySample *sample, NSUInteger idx, BOOL *stop) {
-        [dictionaries addObject:[sample ork_JSONDictionaryWithOptions:ORKSampleIncludeSource|ORKSampleIncludeMetadata unit:_unit]];
+        if (!self.isConsolidated) {
+            [dictionaries addObject:[sample ork_JSONDictionaryWithOptions:ORKSampleIncludeSource|ORKSampleIncludeMetadata unit:_unit]];
+        } else {
+            // If consolidating the results, then only record the bpm, timestamp and recorder identifier
+            NSTimeInterval offset = (self.referenceUptime > 0) ? (self.uptime - self.referenceUptime) : 0;
+            NSTimeInterval timestamp = [sample.endDate timeIntervalSinceDate:self.startDate] + offset;
+            HKUnit *unit = [HKUnit bpmUnit];
+            double bpm = [sample.quantity doubleValueForUnit:unit];
+            [dictionaries addObject:@{ ORKRecorderTimestampKey      : @(timestamp),
+                                       ORKRecorderIdentifierKey     : self.identifier,
+                                       @"bpm"                       : @(bpm) }];
+        }
     }];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateMostRecentSample:results.lastObject];
         
         NSError *error = nil;
-        if (![_logger appendObjects:dictionaries error:&error]) {
+        if (![self.logger appendObjects:dictionaries error:&error]) {
             // Logger writes are unrecoverable
             [self finishRecordingWithError:error];
             return;
@@ -154,21 +162,14 @@ static const NSInteger _HealthAnchoredQueryLimit = 100;
 - (void)start {
     [super start];
     
-    if (!_logger) {
-        NSError *err = nil;
-        _logger = [self makeJSONDataLoggerWithError:&err];
-        if (!_logger) {
-            [self finishRecordingWithError:err];
-            return;
-        }
-    }
-    
     if (![HKHealthStore isHealthDataAvailable]) {
         [self finishRecordingWithError:[NSError errorWithDomain:NSCocoaErrorDomain
                                                            code:NSFeatureUnsupportedError
                                                        userInfo:@{@"recorder" : self}]];
         return;
     }
+    
+    self.uptime = [NSProcessInfo processInfo].systemUptime;
     
     if (!_healthStore) {
         // Get a new obsever query
@@ -210,6 +211,10 @@ static const NSInteger _HealthAnchoredQueryLimit = 100;
     [_healthStore executeQuery:_observerQuery];
 }
 
+- (BOOL)isConsolidated {
+    return (self.sharedLogger != nil) && [self.recorderType isEqualToString: HKQuantityTypeIdentifierHeartRate];
+}
+
 - (NSString *)recorderType {
     return _quantityType.identifier;
 }
@@ -220,15 +225,6 @@ static const NSInteger _HealthAnchoredQueryLimit = 100;
     }
     
     [self doStopRecording];
-    [_logger finishCurrentLog];
-    
-    NSError *error = nil;
-    __block NSURL *fileUrl = nil;
-    [_logger enumerateLogs:^(NSURL *logFileUrl, BOOL *stop) {
-        fileUrl = logFileUrl;
-    } error:&error];
-    
-    [self reportFileResultWithFile:fileUrl error:error];
     
     [super stop];
 }
@@ -248,7 +244,9 @@ static const NSInteger _HealthAnchoredQueryLimit = 100;
 
 - (void)finishRecordingWithError:(NSError *)error {
     [self doStopRecording];
-    [super finishRecordingWithError:error];
+    if (!self.isConsolidated) {
+        [super finishRecordingWithError:error];
+    }
 }
 
 - (BOOL)isRecording {
@@ -259,11 +257,6 @@ static const NSInteger _HealthAnchoredQueryLimit = 100;
     return @"application/json";
 }
 
-- (void)reset {
-    [super reset];
-    
-    _logger = nil;
-}
 
 @end
 
