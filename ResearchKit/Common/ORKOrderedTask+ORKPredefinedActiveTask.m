@@ -1089,6 +1089,10 @@ NSString *const ORKShortWalkRestStepIdentifier = @"walking.rest";
     NSDateComponentsFormatter *formatter = [self textTimeFormatter];
     formatter.unitsStyle = NSDateComponentsFormatterUnitsStyleFull;
     
+    NSString *walkingDurationString = [formatter stringFromTimeInterval:walkDuration];
+    NSString *restDurationString = [formatter stringFromTimeInterval:restDuration];
+
+    
     NSMutableArray *steps = [NSMutableArray array];
     if (!(options & ORKPredefinedTaskOptionExcludeInstructions)) {
         {
@@ -1103,7 +1107,7 @@ NSString *const ORKShortWalkRestStepIdentifier = @"walking.rest";
         {
             ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction1StepIdentifier];
             step.title = ORKLocalizedString(@"WALK_INTRO_2_TITLE", nil);
-            step.text = ORKLocalizedString(@"WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION", nil);
+            step.text = [NSString localizedStringWithFormat:ORKLocalizedString(@"WALK_INTRO_2_TEXT_BACK_AND_FORTH_INSTRUCTION", nil), walkingDurationString, restDurationString];
             ORKStepArrayAddStep(steps, step);
         }
         
@@ -1142,7 +1146,7 @@ NSString *const ORKShortWalkRestStepIdentifier = @"walking.rest";
             
             ORKWalkingTaskStep *walkingStep = [[ORKWalkingTaskStep alloc] initWithIdentifier:ORKShortWalkOutboundStepIdentifier];
             walkingStep.numberOfStepsPerLeg = 1000; // Set the number of steps very high so it is ignored
-            NSString *walkingDurationString = [formatter stringFromTimeInterval:walkDuration];
+            
             walkingStep.title = [NSString localizedStringWithFormat:ORKLocalizedString(@"WALK_BACK_AND_FORTH_INSTRUCTION_FORMAT", nil), walkingDurationString];
             walkingStep.spokenInstruction = walkingStep.title;
             walkingStep.recorderConfigurations = recorderConfigurations;
@@ -1184,8 +1188,7 @@ NSString *const ORKShortWalkRestStepIdentifier = @"walking.rest";
             
             ORKFitnessStep *activeStep = [[ORKFitnessStep alloc] initWithIdentifier:ORKShortWalkRestStepIdentifier];
             activeStep.recorderConfigurations = recorderConfigurations;
-            NSString *durationString = [formatter stringFromTimeInterval:restDuration];
-            activeStep.title = [NSString localizedStringWithFormat:ORKLocalizedString(@"WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT", nil), durationString];
+            activeStep.title = [NSString localizedStringWithFormat:ORKLocalizedString(@"WALK_BACK_AND_FORTH_STAND_INSTRUCTION_FORMAT", nil), restDurationString];
             activeStep.spokenInstruction = activeStep.title;
             activeStep.shouldStartTimerAutomatically = YES;
             activeStep.stepDuration = restDuration;
