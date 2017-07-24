@@ -30,7 +30,7 @@
 
 
 @import UIKit;
-#import <ResearchKit/ORKRecorder.h>
+#import <ResearchKit/ORKRecorder_Private.h>
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
  an active task.
  */
 ORK_CLASS_AVAILABLE
-@interface ORKHealthQuantityTypeRecorder : ORKRecorder
+@interface ORKHealthQuantityTypeRecorder : ORKDataLogRecorder
 
 @property (nonatomic, copy, readonly) HKQuantityType *quantityType;
 
