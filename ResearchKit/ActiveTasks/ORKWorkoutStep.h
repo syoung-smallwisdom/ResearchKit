@@ -93,7 +93,8 @@ ORK_EXTERN NSString *const ORKWorkoutAfterCountdownStepIdentifier ORK_AVAILABLE_
 typedef NS_ENUM(NSInteger, ORKLocationState) {
     ORKLocationStateUnknown,
     ORKLocationStateInside,
-    ORKLocationStateOutdoors
+    ORKLocationStateOutdoors,
+    ORKLocationStateTriggered
 };
 
 /**

@@ -181,10 +181,11 @@ ORKWorkoutResultIdentifier const ORKWorkoutResultIdentifierDistanceTraveled = @"
     } else {
         ORKStep *nextStep = [super stepAfterStepWithIdentifier:identifier withResult:result];
         if ([self shouldAlertUserToMoveOutdoors] &&
-            [nextStep.identifier isEqualToString:ORKWorkoutBeforeStepIdentifier] &&
+            [nextStep.identifier isEqualToString:ORKWorkoutBeforeCountdownStepIdentifier] &&
             (self.locationState == ORKLocationStateInside)) {
             // If this is an outdoor workout and the accuracy indicates that the user is indoors
             // then instruct them to move outdoors.
+            self.locationState = ORKLocationStateTriggered;
             return [self createOutdoorsInstructionStep];
         }
         return nextStep;
