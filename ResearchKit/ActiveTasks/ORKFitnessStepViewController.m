@@ -149,6 +149,10 @@
 }
 
 - (void)updateDistance:(double)distanceInMeters {
+    // Exit early if this is a step where the user is standing still
+    if (self.fitnessStep.standingStill) {
+        return;
+    }
     _contentView.hasDistance = YES;
     _contentView.distanceInMeters = distanceInMeters;
 }
@@ -175,7 +179,7 @@
         _contentView.hasHeartRate = NO;
     }
     _contentView.heartRate = @"--";
-    _contentView.hasDistance = (pedometerRecorder != nil);
+    _contentView.hasDistance = (pedometerRecorder != nil) && !self.fitnessStep.standingStill;
     _contentView.distanceInMeters = 0;
     
 }
