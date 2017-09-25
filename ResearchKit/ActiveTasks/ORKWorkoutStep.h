@@ -111,7 +111,6 @@ typedef NS_ENUM(NSInteger, ORKLocationState) {
  active steps to measure the user's heart rate before and after the workout.
  */
 ORK_CLASS_AVAILABLE
-HK_CLASS_AVAILABLE_IOS_WATCHOS(10_0, 3_0)
 @interface ORKWorkoutStep : ORKPageStep
 
 /**

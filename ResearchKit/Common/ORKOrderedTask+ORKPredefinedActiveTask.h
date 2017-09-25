@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
                                          walkDuration:(NSTimeInterval)walkDuration
                                          restDuration:(NSTimeInterval)restDuration
                                  relativeDistanceOnly:(BOOL)relativeDistanceOnly
-                                              options:(ORKPredefinedTaskOption)options HK_AVAILABLE_IOS_ONLY(10_0);
+                                              options:(ORKPredefinedTaskOption)options API_AVAILABLE(ios(10.0)) API_UNAVAILABLE(watchos);
 
 
 /**
